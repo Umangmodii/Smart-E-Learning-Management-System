@@ -1,0 +1,151 @@
+/* Global */
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* Left Side: Image + Branding */
+.login-left {
+    background: url('/images/login-bg.jpg') no-repeat center center;
+    background-size: contain; /* small image, not full-cover */
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-left::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+
+.login-left > div {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.login-logo {
+    width: 150px; /* smaller logo */
+    height: auto;
+}
+
+/* Right Side: Login Form */
+.login-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 1px solid #e0e0e0;
+}
+
+/* Responsive: Mobile */
+@media (max-width: 768px) {
+    .login-left {
+        min-height: 200px;
+        font-size: 1.3rem;
+        padding: 1rem;
+        background-size: contain;
+    }
+
+    .login-right {
+        padding: 1rem;
+    }
+
+    .login-card {
+        max-width: 100%;
+        padding: 1rem;
+    }
+}
+
+
+/* =========================
+   SMART LMS FOOTER
+========================= */
+.smart-footer {
+    background: oklch(25.65% 0.0265 278.04deg);
+    border-top: 1px solid #e5e7eb;
+    font-size: 14px;
+}
+
+/* Social */
+.footer-social {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.social-icons a {
+    margin-left: 12px;
+    color:white;
+    font-size: 16px;
+}
+
+.social-icons a:hover {
+    color: #0d6efd;
+}
+
+/* Footer Links */
+.footer-links {
+    padding: 2.5rem 0;
+}
+
+.footer-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    color: white;
+}
+
+.p{
+    color: white;
+}
+
+.footer-text {
+    color: white;
+    line-height: 1.6;
+}
+
+.footer-list {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-list li {
+    margin-bottom: 8px;
+}
+
+.footer-list a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-list a:hover {
+    color: #0d6efd;
+}
+
+/* Bottom */
+.footer-bottom {
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+    padding: 1rem;
+    font-size: 13px;
+    color: white;
+}
