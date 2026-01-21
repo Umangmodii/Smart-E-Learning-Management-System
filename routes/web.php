@@ -5,6 +5,9 @@ use App\Livewire\Login;
 use App\Livewire\Register;
 use App\Livewire\Dashboard;
 use App\Livewire\OtpVerify;
+use App\Http\Controllers\GithubController;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\FaceBookController;
 
 // Home Route
 Route::get('/', function () {
@@ -28,3 +31,15 @@ Route::get('/login/otp-verify', OtpVerify::class)->name('otp-verify');
 
 // Logout Route
 Route::post('/logout', [Dashboard::class, 'logout'])->name('logout');
+
+// OAuth2.0 GitHub Login
+Route::get('/auth/github', [GithubController::class,'redirect']);
+Route::get('/github/callback', [GithubController::class, 'callback']);
+
+// Oauth2.0 Google Login
+Route::get('/auth/google',[GoogleController::class,'redirect']);
+Route::get('/google/callback',[GoogleController::class,'callback']);
+
+// Oauth2.0 Facebook Login
+Route::get('/auth/facebook', [FaceBookController::class,'redirect']);
+Route::get('/facebook/callback', [FaceBookController::class,'callback']);

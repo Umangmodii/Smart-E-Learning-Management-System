@@ -5,11 +5,12 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class Register extends Component
 {
     public $name, $email, $password, $password_confirmation;
-    public $rules = [
+    protected $rules = [
         'name' => 'required|min:3',
         'email' => 'required|email|unique:users,email',
         'password' => 'required|min:8|confirmed',
@@ -23,7 +24,8 @@ class Register extends Component
 
     public function register(){
          $this->validate();
-    try{
+           
+         try{
         // Create User
         $user = User::create([
             'name' => $this->name,
