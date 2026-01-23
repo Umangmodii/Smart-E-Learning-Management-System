@@ -62,4 +62,24 @@ class User extends Authenticatable
     public function hasanyrole($role){
         return $this->roles()->whereIn('name',$role)->exists();
     }
+
+    // For User_Profile Table // One User his one profile
+
+    public function profile()
+    {   
+        return $this->hasOne(User_Profile::class,'user_id');
+    }
+
+    // For Role Wise 
+    public function isSuperAdmin(){
+        return $this->role->name === 'super_admin';
+    }
+
+    public function isInstructor(){
+        return $this->role->name  ===  'instructor';
+    }
+
+    public function isStudent(){
+        return $this->role->name  === 'student';
+    }
 }

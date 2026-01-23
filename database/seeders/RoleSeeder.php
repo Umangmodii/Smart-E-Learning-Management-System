@@ -17,10 +17,7 @@ class RoleSeeder extends Seeder
         $roles = [
             'super_admin',
             'instructor',
-            'student',
-            'moderator',
-            'affiliate',
-            'corporate_admin',
+            'student'
         ];
 
         // Check at one time exist user another not 

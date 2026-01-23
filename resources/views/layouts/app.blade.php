@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Smart E-Learning | @yield('title', 'Home')</title>
+        <title>Smart E-Learning | {{ $title }} </title>
         <!-- Favicons -->
         <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" type="image/svg+xml">
         <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" sizes="32x32">

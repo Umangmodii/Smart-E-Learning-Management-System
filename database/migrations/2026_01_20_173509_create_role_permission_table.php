@@ -11,21 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
+       if (!Schema::hasTable('role_permission')) {
         Schema::create('role_permission', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('role_id')
-                ->constrained('roles')
-                ->cascadeOnDelete();
-
-            $table->foreignId('permission_id')
-                ->constrained('permissions')
-                ->cascadeOnDelete();
-
+            $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
+            $table->foreignId('permission_id')->constrained('permissions')->cascadeOnDelete();
             $table->unique(['role_id', 'permission_id']);
             $table->timestamps();
         });
     }
+}
 
     /**
      * Reverse the migrations.

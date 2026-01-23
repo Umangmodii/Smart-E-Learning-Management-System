@@ -8,6 +8,8 @@ use App\Livewire\OtpVerify;
 use App\Http\Controllers\GithubController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FaceBookController;
+use App\Livewire\EditProfile;
+use App\Livewire\AccountSettings;
 
 // Home Route
 Route::get('/', function () {
@@ -31,6 +33,12 @@ Route::get('/login/otp-verify', OtpVerify::class)->name('otp-verify');
 
 // Logout Route
 Route::post('/logout', [Dashboard::class, 'logout'])->name('logout');
+
+// // Edit Profile
+Route::get('/dashboard',EditProfile::class)->name('dashboard');
+
+// Security setting
+Route::get('/account-settings',AccountSettings::class)->name('account-settings');
 
 // OAuth2.0 GitHub Login
 Route::get('/auth/github', [GithubController::class,'redirect']);
