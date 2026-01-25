@@ -125,7 +125,7 @@
 
                         <div class="text-center mt-3 md-2 color-gray">
                             Already have an account?
-                            <a href="{{ route('login') }}">Sign Up</a>
+                            <a href="{{ route('login') }}">Sign In</a>
                         </div>
 
                     </div>

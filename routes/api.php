@@ -37,5 +37,7 @@ Route::post('/admin/login', [AdminUserController::class, 'adminLogin']);
 
 Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
       Route::get('/admin-users', [AdminUserController::class, 'admin_users']);
+      Route::get('/admin-profile', [AdminUserController::class, 'admin_profile']);
+      Route::put('/admin-profile-details/{id}', [AdminUserController::class,'update_admin_profile']);
 });
 

@@ -56,4 +56,68 @@ class AdminUserController extends Controller
             'data' => $admins
         ], 200);
     }
+
+    // For Admin Fetched Profile 
+    public function admin_profile(){
+        
+        $admin_users = User::with('profile')
+        ->where('role_id', '!=', 3)
+        ->latest()
+        ->get();
+
+        if($admin_users->isEmpty()){
+            return response()->json([
+                'status' => false,
+                'message' => 'Not admin found',
+            ], 404);
+        }
+
+        if($admin_users){
+            return response()->json([
+                'status' => true,
+                'message' => 'Admin Fetched Successfully',
+                'users' => $admin_users
+            ], 200);
+        }
+    }
+
+    // For Admin Update Profile
+    public function update_admin_profile(Request $request,$id)
+    {   
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email'   => 'required|email|unique:users,email,' . $user->id,
+            'phone'   => 'nullable|string|max:20',
+            'bio'     => 'nullable|string',
+            'avatar'  => 'nullable|image|max:1024', 
+        ]);
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
+
+        // Update Data
+        $profileData = $request->only(['dob', 'gender', 'country', 'city', 'language', 'bio', 'phone']);
+
+        // dd($profileData);
+
+        if ($request->hasFile('avatar')) {
+            $profileData['avatar'] = $request->file('avatar')->store('images', 'public');
+        }
+
+        // Sync with Profile Table
+        $user->profile()->updateOrCreate(
+            ['user_id' => $user->id],
+            $profileData
+        );
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Admin Profile Updated Successfully.',
+            'user' => $user->load('profile') 
+        ], 200);
+    }
 }

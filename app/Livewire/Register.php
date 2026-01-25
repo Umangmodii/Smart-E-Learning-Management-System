@@ -37,16 +37,16 @@ class Register extends Component
            
          try{
         // Create User
-        $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => bcrypt($this->password),
-        ]);
+            $user = User::create([
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => bcrypt($this->password),
+            ]);
 
         // Default Role: Student
-        $user->roles()->attach(
-            Role::where('name','student')->first()
-        );
+        // $user->roles()->attach(
+        //     Role::where('name','student')->first()
+        // );
         
         auth()->login($user);
 

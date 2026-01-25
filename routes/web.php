@@ -12,6 +12,8 @@ use App\Livewire\EditProfile;
 use App\Livewire\AccountSettings;
 use App\Livewire\Admin\Login as LoginAdmin;
 use App\Livewire\Admin\AdminDashboard;
+use App\Livewire\Admin\AdminProfile;
+use App\Livewire\Admin\Users;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -70,9 +72,10 @@ Route::middleware(['auth', 'isAdmin'])->name('admin.')->group(function() {
         Route::get('/admin/dashboard', AdminDashboard::class)->name('dashboard'); 
 });
 
-Route::post('/admin/logout', function () {
-    auth()->logout();
-    session()->invalidate();
-    session()->regenerateToken();
-    return redirect('/');
-})->name('logout');
+Route::post('/admin/logout', [AdminProfile::class, 'logout'])->name('admin.logout');
+
+// For Admin Profile
+Route::get('/admin/profile',AdminProfile::class);
+
+// For Customer Users list
+Route::get('/admin/users',Users::class);
