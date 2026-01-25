@@ -1,5 +1,21 @@
 <div>
     <div class="d-flex flex-column flex-lg-row min-vh-100 bg-light">
+
+          <x-slot name="breadcrumbSlot">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    @foreach($breadcrumbs as $item)
+                        <li class="breadcrumb-item {{ $loop->last ? 'active fw-bold' : '' }}">
+                            @if($item['url'] && !$loop->last)
+                                <a href="{{ $item['url'] }}" class="text-decoration-none">{{ $item['label'] }}</a>
+                            @else
+                                {{ $item['label'] }}
+                            @endif
+                        </li>
+                    @endforeach
+                </ol>
+            </nav>
+        </x-slot>
         
         <div class="d-none d-lg-block bg-white shadow-sm border-end" style="width: 240px; flex-shrink: 0;">
             <div class="p-3 text-center border-bottom">

@@ -14,12 +14,21 @@ class Login extends Component
         'email' => 'required|email',
         'password' => 'required',
     ];
+    public $breadcrumbs = [];
+    // Constructor livewire loaded
+    public function mount()
+    {
+        // Define your breadcrumbs here dynamically
+        $this->breadcrumbs = [
+            ['label' => 'Home', 'url' => url('/')],
+            ['label' => 'Login', 'url' => null],
+        ];
+    }
     public function render()
     {
-        return view('livewire.login')
-        ->layout('layouts.app',['title' => 'Login']);
+       return view('livewire.login')
+            ->layout('layouts.app', ['title' => 'Login']);
     }
-
     public function login()
     {
         $this->validate();

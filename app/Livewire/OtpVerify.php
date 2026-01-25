@@ -9,10 +9,21 @@ use Illuminate\Support\Facades\Mail;
 
 class OtpVerify extends Component
 {
+    public $breadcrumbs = [];
+    // Constructor livewire loaded
+    public function mount()
+    {
+        // Define your breadcrumbs here dynamically
+        $this->breadcrumbs = [
+            ['label' => 'Home', 'url' => url('/')],
+            ['label' => 'Otp Verify', 'url' => null],
+        ];
+    }
     public $otp;
     public $rules = [
         'otp' => 'required|string|max:6',
     ];
+    
     public function render()
     {
         return view('livewire.otp-verify')

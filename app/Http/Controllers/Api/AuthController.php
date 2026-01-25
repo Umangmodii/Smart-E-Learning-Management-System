@@ -63,7 +63,15 @@ class AuthController extends Controller
     // Fetch All Users
     public function fetchUsers() {
         
-        $users = User::all();
+        $users = User::where('role_id', '!=', 1)->latest()->get();
+
+        if($users->isEmpty()){
+            return response()->json([
+                'status' => false,
+                'message' => 'No students found',
+                'users' => []
+            ], 404);
+        }
 
         if($users){
             return response()->json([

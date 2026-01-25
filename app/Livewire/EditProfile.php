@@ -7,11 +7,18 @@ use Livewire\WithFileUploads;
 
 class EditProfile extends Component
 {
+    public $breadcrumbs = [];
+
     use WithFileUploads;
     public $dob, $gender, $country, $city, $language, $bio, $avatar, $phone;
 
     public function mount()
     {
+        $this->breadcrumbs = [
+            ['label' => 'Home', 'url' => url('/')],
+            ['label' => 'Edit Profile', 'url' => null],
+        ];
+
         $profile = auth()->user()->profile; 
 
         if($profile){

@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
+use Database\Seeders\AdminUserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
     // Execute run method of RoleSeeder
     public function run(): void
     {
-        $this->call(RoleSeeder::class);
+        $this->call( RoleSeeder::class);
+        $this->call(AdminUserSeeder::class);
     }
 }

@@ -2,27 +2,20 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Models\Role;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
+        'role_id',
         'provider',
         'provider_id',
         'oauth_token',
@@ -30,56 +23,57 @@ class User extends Authenticatable
         'avatar',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function roles(){
-        return $this->belongsToMany(Role::class,'user_roles'); // Many Users can have Many Roles
+
+    /**
+     * Automatic Role Assignment
+     * This ensures no user ever has a NULL role_id.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if (empty($user->role_id)) {
+                $user->role_id = 3; // Default to Student (ID 3)
+            }
+        });
     }
 
-    // 🔐 Authorization Helpers
-    public function hasRole($role){
-        return $this->roles()->where('name',$role)->exists();
+    //  Relationship: A User belongs to ONE Role
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
-    // Check for multiple roles
-    public function hasanyrole($role){
-        return $this->roles()->whereIn('name',$role)->exists();
-    }
-
-    // For User_Profile Table // One User his one profile
-
+    //  Relationship: One User has one Profile
     public function profile()
     {   
-        return $this->hasOne(User_Profile::class,'user_id');
+        return $this->hasOne(User_Profile::class, 'user_id');
     }
 
-    // For Role Wise 
-    public function isSuperAdmin(){
-        return $this->role->name === 'super_admin';
+    //  Authorization Helpers
+    public function isSuperAdmin()
+    {
+        // Use ?-> to prevent crashes if role is missing
+        return $this->role?->name === 'super_admin';
     }
 
-    public function isInstructor(){
-        return $this->role->name  ===  'instructor';
+    public function isInstructor()
+    {
+        return $this->role?->name === 'instructor';
     }
 
-    public function isStudent(){
-        return $this->role->name  === 'student';
+    public function isStudent()
+    {
+        return $this->role?->name === 'student';
     }
 }

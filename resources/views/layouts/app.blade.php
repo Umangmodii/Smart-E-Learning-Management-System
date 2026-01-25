@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Smart E-Learning | {{ $title }} </title>
+        <title>Smart E-Learning | {{ $title ?? 'E-Learning' }} </title>
         <!-- Favicons -->
         <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" type="image/svg+xml">
         <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" sizes="32x32">
@@ -21,6 +21,14 @@
 
     {{-- Content Layout --}}
     <div class="container py-4">
+        <div class="main-container">
+            @if (isset($breadcrumbSlot))
+                <div class="container mt-3">
+                    {{ $breadcrumbSlot }}
+                </div>
+            @endif
+        </div>
+        
         {{ $slot ?? '' }}
     </div>
 

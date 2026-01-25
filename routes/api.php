@@ -3,6 +3,9 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\UserProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Admin\AdminUserController;
+
+// ----------------------------  Student Login ---------------------------------------------
 
 // For User Registration
 Route::post('/register',[AuthController::class,'register']);
@@ -25,3 +28,14 @@ Route::get('/profile/{user_id}',[UserProfileController::class,'show']);
 Route::middleware('auth:sanctum')->group(function(){
       Route::put('/profiles/update/{user_Id}', [UserProfileController::class,'update']);
 });
+
+// ----------------------------  Admin Login ---------------------------------------------
+
+// For Fetched admin users API
+
+Route::post('/admin/login', [AdminUserController::class, 'adminLogin']);
+
+Route::middleware(['auth:sanctum', 'isAdmin'])->group(function () {
+      Route::get('/admin-users', [AdminUserController::class, 'admin_users']);
+});
+

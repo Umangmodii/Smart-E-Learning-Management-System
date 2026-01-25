@@ -9,9 +9,16 @@ use App\Models\User;
 
 class AccountSettings extends Component
 {
+      public $breadcrumbs = [];
+    // Constructor livewire loaded
     public $email,$password,$password_confirmation;
     public function mount()
     {
+         $this->breadcrumbs = [
+            ['label' => 'Home', 'url' => url('/')],
+            ['label' => 'Admin Login', 'url' => null],
+        ];
+        
         $this->email = auth()->user()->email;
     }
 

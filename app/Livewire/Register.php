@@ -9,6 +9,16 @@ use Illuminate\Support\Facades\DB;
 
 class Register extends Component
 {
+    public $breadcrumbs = [];
+    // Constructor livewire loaded
+    public function mount()
+    {
+        // Define your breadcrumbs here dynamically
+        $this->breadcrumbs = [
+            ['label' => 'Home', 'url' => url('/')],
+            ['label' => 'Register', 'url' => null],
+        ];
+    }
     public $name, $email, $password, $password_confirmation;
     protected $rules = [
         'name' => 'required|min:3',

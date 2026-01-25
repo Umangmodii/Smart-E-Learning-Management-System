@@ -1,6 +1,23 @@
 <div class="container-fluid login-container d-flex align-items-stretch p-0">
     <div class="row flex-fill w-100 m-0">
 
+        <x-slot name="breadcrumbSlot">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    @foreach($breadcrumbs as $item)
+                        <li class="breadcrumb-item {{ $loop->last ? 'active fw-bold' : '' }}">
+                            @if($item['url'] && !$loop->last)
+                                <a href="{{ $item['url'] }}" class="text-decoration-none">{{ $item['label'] }}</a>
+                            @else
+                                {{ $item['label'] }}
+                            @endif
+                        </li>
+                    @endforeach
+                </ol>
+            </nav>
+        </x-slot>
+
+
         <div class="col-md-6 login-left d-flex justify-content-center align-items-center">
             <div>
                 <img src="{{ asset('images/smartlms_logo.png') }}" class="login-logo mb-3">

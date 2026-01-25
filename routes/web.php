@@ -10,6 +10,10 @@ use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\FaceBookController;
 use App\Livewire\EditProfile;
 use App\Livewire\AccountSettings;
+use App\Livewire\Admin\Login as LoginAdmin;
+use App\Livewire\Admin\AdminDashboard;
+
+// ----------------------------  Student Login ---------------------------------------------
 
 // Home Route
 Route::get('/', function () {
@@ -23,10 +27,16 @@ Route::get('/login', Login::class)->name('login');
 Route::get('/register', Register::class)->name('register');
 
 //  Protected Routes
-Route::middleware('auth')->group(function(){
-    // Dashboard Route
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
-});
+// Find the generic dashboard route and update it to this:
+Route::middleware(['auth'])->get('/dashboard', function () {
+    // If the logged-in user is a Super Admin, kick them out of the student area
+    if (auth()->user()->isSuperAdmin()) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    // Only actual students get to stay here
+    return view('dashboard'); 
+})->name('dashboard');
 
 // OTP Verification Route (Livewire component)
 Route::get('/login/otp-verify', OtpVerify::class)->name('otp-verify');
@@ -51,3 +61,18 @@ Route::get('/google/callback',[GoogleController::class,'callback']);
 // Oauth2.0 Facebook Login
 Route::get('/auth/facebook', [FaceBookController::class,'redirect']);
 Route::get('/facebook/callback', [FaceBookController::class,'callback']);
+
+// ----------------------------  Admin Login ---------------------------------------------
+
+Route::get('/admin/login', LoginAdmin::class)->name('admin.admin_login')->middleware('guest'); 
+
+Route::middleware(['auth', 'isAdmin'])->name('admin.')->group(function() {
+        Route::get('/admin/dashboard', AdminDashboard::class)->name('dashboard'); 
+});
+
+Route::post('/admin/logout', function () {
+    auth()->logout();
+    session()->invalidate();
+    session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
