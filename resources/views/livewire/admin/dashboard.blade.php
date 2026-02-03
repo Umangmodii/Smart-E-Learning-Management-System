@@ -20,94 +20,112 @@
             <i class="bi bi-check-circle-fill me-2"></i> 
             <strong>Success!</strong> You have successfully accessed the SmartLMS Admin Panel.
         </div> --}}
-
-         <div class="row g-2"> 
-    
+<div class="row g-2"> 
     <div class="col-6 col-lg-2">
         <div class="card bg-primary text-white mb-3 border-0 shadow-sm h-100">
             <div class="card-body p-2 text-center">
                 <i class="bi bi-people-fill opacity-50 mb-1" style="font-size: 1.5rem;"></i>
                 <h4 class="fw-bold mb-0">{{ $totalCustomers }}</h4>
-                <p class="mb-0 x-small">Customers</p>
+                <p class="mb-0 x-small">Students</p>
             </div>
-            <a href="{{ url('admin/student_users') }}" class="card-footer text-white text-center text-decoration-none x-small p-1" style="background: rgba(0,0,0,0.1);">
-                More <i class="bi bi-arrow-right-circle"></i>
-            </a>
+            <div class="card-footer text-white text-center x-small p-1" style="background: rgba(0,0,0,0.1);">
+                Total Users
+            </div>
         </div>
     </div>
 
     <div class="col-6 col-lg-2">
-        <div class="card text-white mb-3 border-0 shadow-sm h-100" style="background: linear-gradient(45deg, #4e73df 0%, #224abe 100%);">
+        <div class="card text-white mb-3 border-0 shadow-sm h-100" style="background: #4e73df;">
             <div class="card-body p-2 text-center">
-                <i class="bi bi-shield-lock-fill opacity-25 mb-1" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-shield-lock-fill opacity-50 mb-1" style="font-size: 1.5rem;"></i>
                 <h4 class="fw-bold mb-0">{{ $totalAdmin }}</h4>
-                <p class="mb-0 x-small">Admins</p>
+                <p class="mb-0 x-small">Admin Staff</p>
             </div>
-            <a href="{{ url('admin/admin_users') }}" class="card-footer text-white text-center text-decoration-none x-small p-1" style="background: rgba(0,0,0,0.1);">
-                View <i class="bi bi-arrow-right-circle"></i>
-            </a>
+            <div class="card-footer text-white text-center x-small p-1" style="background: rgba(0,0,0,0.1);">
+                System Access
+            </div>
         </div>
     </div>
 
     <div class="col-6 col-lg-2">
         <div class="card bg-info text-white mb-3 border-0 shadow-sm h-100">
             <div class="card-body p-2 text-center">
-                <i class="bi bi-book-half opacity-50 mb-1" style="font-size: 1.5rem;"></i>
-                <h4 class="fw-bold mb-0">150</h4>
-                <p class="mb-0 x-small">Courses</p>
+                <i class="bi bi-person-workspace opacity-50 mb-1" style="font-size: 1.5rem;"></i>
+                <h4 class="fw-bold mb-0"> {{ $totalInstructor }} </h4>
+                <p class="mb-0 x-small">Instructors</p>
             </div>
-            <a href="#" class="card-footer text-white text-center text-decoration-none x-small p-1" style="background: rgba(0,0,0,0.1);">
-                List <i class="bi bi-arrow-right-circle"></i>
-            </a>
+            <div class="card-footer text-white text-center x-small p-1" style="background: rgba(0,0,0,0.1);">
+                Active Faculty
+            </div>
         </div>
     </div>
 
-    <div class="col-6 col-lg-2">
-        <div class="card bg-success text-white mb-3 border-0 shadow-sm h-100">
+        <div class="col-6 col-lg-2">
+        <div class="card bg-secondary text-white mb-3 border-0 shadow-sm h-100">
             <div class="card-body p-2 text-center">
-                <i class="bi bi-graph-up-arrow opacity-50 mb-1" style="font-size: 1.5rem;"></i>
-                <h4 class="fw-bold mb-0">53%</h4>
-                <p class="mb-0 x-small">Pass Rate</p>
+                <i class="bi bi-collection-play-fill opacity-50 mb-1" style="font-size: 1.5rem;"></i>
+                <h4 class="fw-bold mb-0"> {{ $totalBanner }} </h4>
+                <p class="mb-0 x-small">Sliders</p>
             </div>
-            <a href="#" class="card-footer text-white text-center text-decoration-none x-small p-1" style="background: rgba(0,0,0,0.1);">
-                Stats <i class="bi bi-arrow-right-circle"></i>
-            </a>
+            <div class="card-footer text-white text-center x-small p-1" style="background: rgba(0,0,0,0.1);">
+                Promo Media
+            </div>
         </div>
     </div>
 
     <div class="col-6 col-lg-2">
         <div class="card bg-warning text-dark mb-3 border-0 shadow-sm h-100">
             <div class="card-body p-2 text-center">
-                <i class="bi bi-person-plus opacity-50 mb-1" style="font-size: 1.5rem;"></i>
-                <h4 class="fw-bold mb-0">44</h4>
-                <p class="mb-0 x-small">New Users</p>
+                <i class="bi bi-tags-fill opacity-50 mb-1" style="font-size: 1.5rem;"></i>
+                <h4 class="fw-bold mb-0"> {{ $totalCategory }} </h4>
+                <p class="mb-0 x-small">Taxonomy</p>
             </div>
-            <a href="#" class="card-footer text-dark text-center text-decoration-none x-small p-1" style="background: rgba(0,0,0,0.1);">
-                Check <i class="bi bi-arrow-right-circle"></i>
-            </a>
+            <div class="card-footer text-dark text-center x-small p-1" style="background: rgba(0,0,0,0.1);">
+                Course Groups
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-2">
+        <div class="card bg-dark text-white mb-3 border-0 shadow-sm h-100">
+            <div class="card-body p-2 text-center">
+                <i class="bi bi-play-circle-fill opacity-50 mb-1" style="font-size: 1.5rem;"></i>
+                <h4 class="fw-bold mb-0">150</h4>
+                <p class="mb-0 x-small">Live Courses</p>
+            </div>
+            <div class="card-footer text-white text-center x-small p-1" style="background: rgba(0,0,0,0.1);">
+                LMS Content
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6 col-lg-2">
+        <div class="card bg-success text-white mb-3 border-0 shadow-sm h-100">
+            <div class="card-body p-2 text-center">
+                <i class="bi bi-mortarboard-fill opacity-50 mb-1" style="font-size: 1.5rem;"></i>
+                <h4 class="fw-bold mb-0">53%</h4>
+                <p class="mb-0 x-small">Avg. Score</p>
+            </div>
+            <div class="card-footer text-white text-center x-small p-1" style="background: rgba(0,0,0,0.1);">
+                Student Success
+            </div>
         </div>
     </div>
 
     <div class="col-6 col-lg-2">
         <div class="card bg-danger text-white mb-3 border-0 shadow-sm h-100">
             <div class="card-body p-2 text-center">
-                <i class="bi bi-eye-fill opacity-50 mb-1" style="font-size: 1.5rem;"></i>
+                <i class="bi bi-activity opacity-50 mb-1" style="font-size: 1.5rem;"></i>
                 <h4 class="fw-bold mb-0">65</h4>
-                <p class="mb-0 x-small">Visitors</p>
+                <p class="mb-0 x-small">Real-time</p>
             </div>
-            <a href="#" class="card-footer text-white text-center text-decoration-none x-small p-1" style="background: rgba(0,0,0,0.1);">
-                Traffic <i class="bi bi-arrow-right-circle"></i>
-            </a>
+            <div class="card-footer text-white text-center x-small p-1" style="background: rgba(0,0,0,0.1);">
+                Live Traffic
+            </div>
         </div>
     </div>
-
-
+</div>
 
 <style>
     .x-small { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 </style>
-
-        </div>
-    </div>  
-    
-</div>

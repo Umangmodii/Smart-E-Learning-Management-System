@@ -76,6 +76,78 @@ body, html {
 }
 
 
+/* For Banner */
+
+        .banner-bg {
+            height: 500px; /* Professional Web Height */
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        /* TYPOGRAPHY */
+        .responsive-h1 {
+            font-size: calc(1.8rem + 1.2vw);
+            line-height: 1.1;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .responsive-p {
+            font-size: calc(0.9rem + 0.2vw);
+            max-width: 550px;
+            margin-bottom: 30px;
+        }
+
+        .btn-custom {
+            padding: 12px 35px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: linear-gradient(45deg, #0d6efd, #004dc0);
+            border: none;
+        }
+
+        /* MODERN INDICATORS */
+        .custom-indicators [data-bs-target] {
+            width: 35px;
+            height: 5px;
+            border-radius: 10px;
+            margin: 0 5px;
+            background-color: rgba(255,255,255,0.4);
+            border: none;
+        }
+        .custom-indicators .active { 
+            background-color: #fff; 
+            width: 50px; 
+        }
+
+        /* MOBILE RESPONSIVE LOGIC */
+        @media (max-width: 991px) {
+            .banner-bg { height: 400px; }
+        }
+
+        @media (max-width: 767px) {
+            .banner-bg { 
+                height: 380px; 
+                /* Mobile Gradient: darker top/bottom overlay for clarity */
+                background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), var(--bg-img);
+            }
+            .responsive-h1 { font-size: 2rem; }
+            .responsive-p { font-size: 1rem; margin-left: auto; margin-right: auto; }
+        }
+
+        /* Fade Animation */
+        .carousel-fade .carousel-item {
+            opacity: 0;
+            transition-duration: 0.8s;
+            transition-property: opacity;
+        }
+        .carousel-item.active { opacity: 1; }
+
+
 /* =========================
    SMART LMS FOOTER
 ========================= */
@@ -163,3 +235,5 @@ body, html {
 }
 
 
+
+/* For categories to show */

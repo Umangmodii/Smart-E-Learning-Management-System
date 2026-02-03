@@ -49,20 +49,79 @@
                         <i class="bi bi-people me-2"></i> <span>Users</span>
                     </a>
                 </li>
+                
+                <li>
+                    <a href="#instructorSubmenu" data-bs-toggle="collapse" aria-expanded="false" class="dropdown-toggle d-flex align-items-center {{ request()->is('admin/instructors*') ? 'active' : '' }}">
+                        <i class="bi bi-person-badge me-2"></i> 
+                        <span>Instructors</span>
+                    </a>
+                    <ul class="collapse list-unstyled ps-3 {{ request()->is('admin/instructors*') ? 'show' : '' }}" id="instructorSubmenu">
+                        <li>
+                         <a href="{{ url('admin/instructors/pending') }}" 
+                            class="py-2 {{ request()->is('admin/instructors/pending') ? 'text-primary fw-bold' : '' }}">
+                                <i class="bi bi-person-plus me-2"></i> 
+                                <span>Pending Requests</span>
+                                <span class="badge bg-danger rounded-pill float-end mt-1">
+                                    {{ \App\Models\Instructor::where('status', 0)->count() }}
+                                </span>
+                          </a>
+                        </li>
+                        <li>
+                            <a href="{{ url('admin/instructors/active') }}" class="py-2 {{ request()->is('admin/instructors/active') ? 'text-primary fw-bold' : '' }}">
+                                <i class="bi bi-check-circle me-2"></i> 
+                                 <span>Active Requests</span>
+                                <span class="badge bg-primary rounded-pill float-end mt-1">
+                                    {{ \App\Models\Instructor::where('status', 1)->count() }}
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a href="{{ url('admin/categories') }}" class="{{ request()->is('admin/categories*') ? 'active' : '' }}">
+                        <i class="bi bi-grid-3x3-gap me-2"></i> <span>Categories</span>
+                    </a>
+                </li>
+
                 <li>
                     <a href="{{ url('admin/courses') }}" class="{{ request()->is('admin/courses*') ? 'active' : '' }}">
                         <i class="bi bi-book me-2"></i> <span>Courses</span>
                     </a>
                 </li>
-                <li>
-                    <a href="{{ url('admin/settings') }}" class="{{ request()->is('admin/settings*') ? 'active' : '' }}">
-                        <i class="bi bi-gear me-2"></i> <span>Settings</span>
-                    </a>
-                </li>
 
-                <li id="noMenuResult" class="text-center py-4" style="display: none;">
-                    <i class="bi bi-search text-muted d-block fs-4 mb-2"></i>
-                    <small class="text-muted">No matches found</small>
+             <li class="nav-item">
+                    <a class="nav-link d-flex justify-content-between align-items-center {{ request()->is('admin/settings*') ? 'active' : 'collapsed' }}" 
+                    data-bs-toggle="collapse" 
+                    href="#settingsDropdown" 
+                    role="button" 
+                    aria-expanded="{{ request()->is('admin/settings*') ? 'true' : 'false' }}">
+                        <div>
+                            <i class="bi bi-gear me-2"></i>
+                            <span>Settings</span>
+                        </div>
+                        <i class="bi bi-chevron-down small"></i>
+                    </a>
+
+                    <div class="collapse {{ request()->is('admin/settings*') ? 'show' : '' }}" id="settingsDropdown">
+                        <ul class="nav flex-column ps-4 pt-1">
+                            <li class="nav-item">
+                                <a href="{{ url('admin/banner') }}" 
+                                class="nav-link py-2 {{ request()->is('admin/banner')}}">
+                                    <i class="bi bi-image me-2"></i>
+                                    <span>Banners</span>
+                                </a>
+                            </li>
+                            
+                            {{-- <li class="nav-item">
+                                <a href="{{ url('admin/settings/general') }}" 
+                                class="nav-link py-2 {{ request()->is('admin/settings/general') ? 'text-primary fw-bold' : 'text-muted' }}">
+                                    <i class="bi bi-sliders me-2"></i>
+                                    <span>General</span>
+                                </a>
+                            </li> --}}
+                        </ul>
+                    </div>
                 </li>
             </ul>
         </nav>
@@ -98,6 +157,15 @@
             </nav>
 
             <main class="p-3 p-md-4">
+
+                 <div class="main-container">
+                    @if (isset($breadcrumbSlot))
+                        <div class="container mt-3">
+                            {{ $breadcrumbSlot }}
+                        </div>
+                    @endif
+                </div>
+
                 {{ $slot }}
             </main>
 

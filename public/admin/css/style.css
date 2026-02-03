@@ -120,3 +120,53 @@ main { flex: 1 0 auto; }
 }
 
 .main-footer { background-color: #ffffff !important; padding: 15px 20px; border-top: 1px solid #dee2e6; font-size: 0.9rem; }
+
+/* Banner Design Admin side */
+        .letter-spacing-1 { letter-spacing: 0.05rem; }
+        .border-dashed { border: 2px dashed #dee2e6 !important; }
+        .custom-table tr:hover { background-color: #fcfcfc; }
+        .nav-tabs .nav-link.active { 
+            color: var(--bs-primary) !important; 
+            border-bottom: 2px solid var(--bs-primary) !important; 
+        }
+        .custom-switch { width: 3rem; height: 1.5rem; cursor: pointer; }
+        .shadow-xs { box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .object-fit-cover { object-fit: cover; }
+
+
+/* Frontend side to show banner */
+
+    .banner-bg {
+        height: 800px; /* Desktop Height */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 768px) {
+        .banner-bg {
+            height: 450px; /* Tablet Height */
+        }
+        .banner-bg h1 {
+            font-size: 2rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .banner-bg {
+            height: 550px; /* Mobile Height - taller to fit text */
+            text-align: center;
+        }
+        .banner-bg .row {
+            justify-content: center;
+        }
+    }
+
+    /* Smooth transition */
+    .carousel-fade .carousel-item {
+        transition: opacity 0.8s ease-in-out;
+    }

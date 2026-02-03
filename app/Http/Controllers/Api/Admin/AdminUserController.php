@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 
 class AdminUserController extends Controller
@@ -16,7 +16,7 @@ class AdminUserController extends Controller
             'password' => 'required'
         ]);
 
-        $user = User::where('email',$request->email)->first();
+        $user = Admin::where('email',$request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
@@ -46,7 +46,7 @@ class AdminUserController extends Controller
             ], 403);
         }
 
-        $admins = User::where('role_id', 1)
+        $admins = Admin::where('role_id', 1)
             ->latest()
             ->get();
 
@@ -60,7 +60,7 @@ class AdminUserController extends Controller
     // For Admin Fetched Profile 
     public function admin_profile(){
         
-        $admin_users = User::with('profile')
+        $admin_users = Admin::with('profile')
         ->where('role_id', '!=', 3)
         ->latest()
         ->get();
@@ -84,7 +84,7 @@ class AdminUserController extends Controller
     // For Admin Update Profile
     public function update_admin_profile(Request $request,$id)
     {   
-        $user = User::findOrFail($id);
+        $user = Admin::findOrFail($id);
 
         $request->validate([
             'name'  => 'required|string|max:255',

@@ -14,6 +14,16 @@ use App\Livewire\Admin\Login as LoginAdmin;
 use App\Livewire\Admin\AdminDashboard;
 use App\Livewire\Admin\AdminProfile;
 use App\Livewire\Admin\Users;
+use App\Livewire\Instructor\StartedTeach;
+use App\Livewire\Instructor\Registers;
+use App\Livewire\Instructor\LoginUser;
+use App\Livewire\Admin\PendingRequests;
+use App\Livewire\Instructor\DashboardController;
+use App\Livewire\Admin\ActiveInstructors;
+use App\Livewire\Instructor\InstructorProfile;
+use App\Livewire\Admin\Categories;
+use App\Livewire\Admin\Banner;
+use App\Http\Controllers\frontend\BannerController;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -21,6 +31,8 @@ use App\Livewire\Admin\Users;
 Route::get('/', function () {
     return view('layouts.app');
 });
+// Banner Route
+Route::get('/', [BannerController::class, 'index']);
 
 // Login Route
 Route::get('/login', Login::class)->name('login');
@@ -64,18 +76,62 @@ Route::get('/google/callback',[GoogleController::class,'callback']);
 Route::get('/auth/facebook', [FaceBookController::class,'redirect']);
 Route::get('/facebook/callback', [FaceBookController::class,'callback']);
 
-// ----------------------------  Admin Login ---------------------------------------------
+// ----------------------------  Admin  ---------------------------------------------
 
-Route::get('/admin/login', LoginAdmin::class)->name('admin.admin_login')->middleware('guest'); 
+// 1. Keep this OUTSIDE any auth groups
+Route::get('/admin/login', LoginAdmin::class)
+    ->name('admin.admin_login')
+    ->middleware('guest:admin'); // Use guest:admin to allow only logged-out admins
 
-Route::middleware(['auth', 'isAdmin'])->name('admin.')->group(function() {
-        Route::get('/admin/dashboard', AdminDashboard::class)->name('dashboard'); 
+// 2. Only protect the dashboard and other internal pages
+Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function() {
+        Route::get('/dashboard', AdminDashboard::class)->name('dashboard'); 
+        //  Route::get('/admin/dashboard', AdminDashboard::class)->name('dashboard');  // For Admin Profile
+        Route::get('/admin/profile',AdminProfile::class);
+        // For Customer Users list
+        Route::get('/users',Users::class);
+        Route::post('/logout', [AdminProfile::class, 'logout'])->name('admin.logout');
+        Route::get('/profile', AdminProfile::class)->name('profile');
+        Route::get('/instructors/pending',PendingRequests::class)->name('admin.pending_requests');
+        Route::get('/instructors/active',ActiveInstructors::class)->name('admin.active-requests');
+        Route::get('/categories',Categories::class)->name('admin.categories');
+        Route::get('/banner', Banner::class)->name('admin.banners');
 });
 
-Route::post('/admin/logout', [AdminProfile::class, 'logout'])->name('admin.logout');
+// ----------------------------  Instructor  ---------------------------------------------
 
-// For Admin Profile
-Route::get('/admin/profile',AdminProfile::class);
+Route::prefix('instructor')->group(function () {
+    // Landing Page
+    Route::get('/started-teach', StartedTeach::class)->name('instructor.started_teach');
 
-// For Customer Users list
-Route::get('/admin/users',Users::class);
+    // Guest routes: Only accessible if NOT logged in as instructor
+    Route::middleware('guest:instructor')->group(function () {
+        Route::get('/register', Registers::class)->name('instructor.register');
+        Route::get('/login', LoginUser::class)->name('instructor.login');
+    });
+});
+
+// ----------------------------  Instructor (Protected) --------------------------------
+
+Route::middleware(['auth:instructor'])->prefix('instructor')->name('instructor.')->group(function (){
+    
+    // Approval Middleware: You should create this to check if status == 1
+    Route::middleware(['isInstructor'])->group(function() {
+        Route::get('/dashboard', DashboardController::class)->name('dashboard');
+        Route::get('/profile', InstructorProfile::class)->name('profile');
+    });
+
+    Route::get('/pending-approval', function () {
+
+        $instructor = auth('instructor')->user();
+
+        if ($instructor->status == 1) {
+            return redirect()->route('dashboard');
+        }
+        if ($instructor->status == 2) {
+            return redirect()->route('register')->with('error', 'Application declined.');
+        }
+
+        return view('instructor.pending');
+    })->name('pending');
+});

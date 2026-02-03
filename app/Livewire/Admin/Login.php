@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Livewire\Admin;
-use App\Rules\ReCaptcha;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class Login extends Component
@@ -30,21 +30,15 @@ class Login extends Component
         $credentials = $this->validate([
             'email' => 'required|email',
             'password' => 'required',
-            // 'g-recaptcha-response' => ['required', new ReCaptcha],
         ]);
 
-        if (auth()->attempt($credentials)) {
-            // Check if the user is actually an admin
-            if (auth()->user()->isSuperAdmin()) {
-                session()->flash('success', 'Admin login successfully.');
-                // return redirect()->route('admin.dashboard');
-                return redirect()->route('admin.dashboard');
-            }
-
-            // MISTAKE PREVENTER: If they are a student, log them out immediately!
-            auth()->logout();
-            session()->flash('error', 'Access Denied: These credentials do not have Admin privileges.');
-            return redirect()->route('admin.admin_login');
+       if (Auth::guard('admin')->attempt($credentials)) {
+            
+            // 2. Regenerate session for the admin guard
+            request()->session()->regenerate();
+            
+            session()->flash('success', 'Admin login successfully.');
+            return redirect()->route('admin.dashboard');
         }
 
         session()->flash('error', 'Invalid login details.');

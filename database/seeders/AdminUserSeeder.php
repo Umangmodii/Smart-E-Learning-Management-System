@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\Admin;
 use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,7 +17,7 @@ class AdminUserSeeder extends Seeder
         $superAdmin = Role::where('name','super_admin')->first();
 
         if($superAdmin){
-        User::updateOrCreate(
+        Admin::updateOrCreate(
                 ['email' => 'admin@smartlms.com'],
                 [
                     'name' => 'Smart LMS',

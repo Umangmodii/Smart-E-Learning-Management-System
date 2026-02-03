@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
@@ -13,15 +14,13 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check() || !auth()->user()->isSuperAdmin()) {
-        
-        if (auth()->check()) {
-            auth()->logout(); 
+        if (auth('admin_api')->check() && auth('admin_api')->user()->role_id == 1) {
+            return $next($request);
         }
 
-        return redirect()->route('admin.admin_login')
-            ->with('error', 'Unauthorized access. Admins only.');
-    }
-        return $next($request);
-    } 
+        return response()->json([
+            'status' => false,
+            'message' => 'Access Denied: Admin privileges required.'
+        ], 403);
+        }
 }

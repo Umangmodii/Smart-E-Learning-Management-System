@@ -19,10 +19,14 @@ class EditProfile extends Component
             ['label' => 'Edit Profile', 'url' => null],
         ];
 
+        if (auth()->check()) {
         $profile = auth()->user()->profile; 
 
-        if($profile){
+        if ($profile) {
             $this->fill($profile->toArray());
+        }
+        } else {
+            return redirect()->route('login');
         }
     }
 

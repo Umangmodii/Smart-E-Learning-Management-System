@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
     protected $fillable = [
         'name',
         'email',
@@ -22,6 +21,8 @@ class User extends Authenticatable
         'oauth_token',
         'oauth_refresh_token',
         'avatar',
+        'status',         
+        'marketing_opt_in',
     ];
 
     protected $hidden = [
@@ -46,6 +47,13 @@ class User extends Authenticatable
             if (empty($user->role_id)) {
                 $user->role_id = 3; // Default to Student (ID 3)
             }
+
+            // if($user->role_id == 2){
+            //     $user->status = self::STATUS_PENDING;
+            // }
+            // else{
+            //     $user->status = self::STATUS_APPROVED;
+            // }
         });
     }
 
@@ -60,19 +68,11 @@ class User extends Authenticatable
     {   
         return $this->hasOne(User_Profile::class, 'user_id');
     }
-
-    //  Authorization Helpers
-    public function isSuperAdmin()
-    {
-        // Use ?-> to prevent crashes if role is missing
-        return $this->role?->name === 'super_admin';
-    }
-
-    public function isInstructor()
-    {
-        return $this->role?->name === 'instructor';
-    }
-
+    // For instructor and admin
+    // public function instructorProfile()
+    // {
+    //     return $this->hasOne(InstructorProfile::class, 'user_id');
+    // }
     public function isStudent()
     {
         return $this->role?->name === 'student';

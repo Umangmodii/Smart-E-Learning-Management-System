@@ -1,0 +1,73 @@
+/* Responsive Image Styling */
+.hover-zoom img {
+    transition: transform 0.4s ease-in-out;
+}
+
+.hover-zoom:hover img {
+    transform: scale(1.03);
+}
+
+/* Feature Cards */
+.icon-box {
+    width: 60px;
+    height: 60px;
+    background: rgba(var(--bs-primary-rgb), 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2.2rem; /* Shorter headline for mobile */
+    }
+}
+
+/* Industrial Active Link Highlights */
+.navbar-nav .nav-link.active {
+    color: #0d6efd !important; /* Professional Blue */
+    transition: color 0.3s ease;
+}
+
+/* Subtle underline for the active link on desktop */
+@media (min-width: 992px) {
+    .navbar-nav .nav-link.active {
+        border-bottom: 2px solid #0d6efd;
+        padding-bottom: 2px;
+    }
+}
+
+/* For Admin Dashboard CSS */
+
+     .instructor-dashboard-wrapper {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+        .x-small { 
+            font-size: 0.65rem; 
+            font-weight: 700; 
+            text-transform: uppercase; 
+            letter-spacing: 0.8px; 
+        }
+        .stats-card { 
+            transition: all 0.3s ease; 
+        }
+        .stats-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important; 
+        }
+        .footer-link { 
+            background: rgba(0,0,0,0.12); 
+            transition: background 0.2s; 
+            font-size: 0.6rem !important;
+        }
+        .footer-link:hover { 
+            background: rgba(0,0,0,0.25); 
+        }
+        .breadcrumb-item + .breadcrumb-item::before { 
+            font-family: "bootstrap-icons";
+            content: "\F285"; 
+            font-size: 0.6rem;
+            color: #adb5bd;
+        }
