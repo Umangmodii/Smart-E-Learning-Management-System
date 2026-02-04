@@ -24,15 +24,21 @@ use App\Livewire\Instructor\InstructorProfile;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Banner;
 use App\Http\Controllers\frontend\BannerController;
+use App\Livewire\CourseDetails;
+use App\Livewire\Instructor\CoursesController;
 
 // ----------------------------  Student Login ---------------------------------------------
 
 // Home Route
 Route::get('/', function () {
-    return view('layouts.app');
+return view('layouts.app');
 });
 // Banner Route
 Route::get('/', [BannerController::class, 'index']);
+
+// Course Details Route
+Route::get('/categories/course/{category_slug}/{course_slug?}', CourseDetails::class)
+    ->name('course-details');
 
 // Login Route
 Route::get('/login', Login::class)->name('login');
@@ -119,6 +125,9 @@ Route::middleware(['auth:instructor'])->prefix('instructor')->name('instructor.'
     Route::middleware(['isInstructor'])->group(function() {
         Route::get('/dashboard', DashboardController::class)->name('dashboard');
         Route::get('/profile', InstructorProfile::class)->name('profile');
+
+        // For Course
+        Route::get('/courses',CoursesController::class)->name('courses');
     });
 
     Route::get('/pending-approval', function () {

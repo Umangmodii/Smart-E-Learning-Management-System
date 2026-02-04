@@ -9,6 +9,7 @@ class AppServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        // Global composer for all views
         View::composer('*', function ($view) {
             $view->with('categories', AdminCategory::with('children')
                 ->where(function($query) {
@@ -19,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
                 // ->where('status', 1)
                 ->orderBy('order_priority', 'asc')
                 ->get());
+        });
+
+        // Specific composer for admin categories Livewire component
+        View::composer(['layouts.app', 'layouts.header'], function ($view) {
+            $view->with('categories', AdminCategory::whereNull('parent_id')->where('status', 1)->get());
         });
     }
 }

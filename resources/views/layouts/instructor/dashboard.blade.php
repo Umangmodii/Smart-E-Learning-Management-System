@@ -51,7 +51,7 @@
                     </a>
                 </li>
 
-                <li class="nav-label text-uppercase small px-3 mt-4 mb-2">User Hub</li>
+                {{-- <li class="nav-label text-uppercase small px-3 mt-4 mb-2">User Hub</li>
                 <li>
                     <a href="#instructorSubmenu" data-bs-toggle="collapse" 
                        aria-expanded="{{ request()->is('admin/instructors*') ? 'true' : 'false' }}" 
@@ -63,7 +63,7 @@
                         <li><a href=""><i class="bi bi-clock-history me-2"></i> Pending Approval</a></li>
                         <li><a href=""><i class="bi bi-check-circle-fill me-2"></i> Active List</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 <li>
                     <a href="{{ url('admin/students') }}" class="d-flex align-items-center {{ request()->is('admin/students*') ? 'active' : '' }}">
                         <i class="bi bi-people-fill me-2"></i> <span>Enrolled Students</span>
@@ -77,8 +77,8 @@
                         <i class="bi bi-chevron-down small"></i>
                     </a>
                     <ul class="collapse list-unstyled ps-3" id="courseSubmenu">
-                        <li><a href="{{ url('admin/courses') }}" class="py-2"><i class="bi bi-list-ul me-2"></i> All Courses</a></li>
-                        <li><a href="{{ url('admin/courses/categories') }}" class="py-2"><i class="bi bi-tags-fill me-2"></i> Taxonomy</a></li>
+                        <li><a href="{{ url('instructor/courses') }}" class="py-2"><i class="bi bi-list-ul me-2"></i> All Courses</a></li>
+                        <li><a href="{{ url('instructor/courses/categories') }}" class="py-2"><i class="bi bi-tags-fill me-2"></i> Course Categories</a></li>
                         <li><a href="{{ url('admin/courses/reviews') }}" class="py-2"><i class="bi bi-star-fill me-2"></i> Quality Reviews</a></li>
                     </ul>
                 </li>

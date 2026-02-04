@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Course;
 
 class AdminCategory extends Model
 {
@@ -29,5 +30,11 @@ class AdminCategory extends Model
     public function creator()
     {
         return $this->belongsTo(Admin::class, 'created_by');
+    }
+
+    // Relationship to get courses under this category
+    public function courses()
+    {
+        return $this->hasMany(Course::class, 'category_id');
     }
 }

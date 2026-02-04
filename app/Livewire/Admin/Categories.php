@@ -3,10 +3,11 @@
 namespace App\Livewire\Admin;
 
 use Livewire\Component;
-use Livewire\Attributes\Computed; // ADD THIS
+use Livewire\Attributes\Computed; 
 use App\Models\AdminCategory as Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class Categories extends Component
 {
@@ -22,14 +23,11 @@ class Categories extends Component
         ];
     }
 
-    // FIX: Add Computed Attribute so you can use $this->parent_name in Blade
-    #[Computed]
     public function parent_name()
     {
         return $this->parent_id ? Category::find($this->parent_id)?->name : '';
     }
 
-    #[Computed]
     public function parent_slug()
     {
         return $this->parent_id ? Category::find($this->parent_id)?->slug : '';
@@ -55,7 +53,6 @@ class Categories extends Component
         
         $this->activeTab = 'edit';
     }
-
     public function store()
     {
         $this->validate([
@@ -94,7 +91,6 @@ class Categories extends Component
         $category->save();
         session()->flash('success', 'Status updated.');
     }
-
     public function render()
     {
         return view('livewire.admin.categories', [
