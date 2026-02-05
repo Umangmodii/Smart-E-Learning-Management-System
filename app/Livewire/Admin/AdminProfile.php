@@ -6,7 +6,6 @@ use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
 class AdminProfile extends Component
 {
     public $breadcrumbs = [];
@@ -51,9 +50,9 @@ class AdminProfile extends Component
             //     'avatar' => 'nullable|image|max:1024'
             // ]);   
 
-            $user = auth()->user();
+            $admin = Auth::guard('admin')->user();
 
-            $user->update([
+            $admin->update([
                  'name' => $this->name,
                  'gender' => $this->gender,
                  'dob' => $this->dob,
@@ -65,18 +64,22 @@ class AdminProfile extends Component
                 'dob', 'gender', 'country', 'city', 'language', 'bio', 'phone','avatar'
             ]);
 
+            $data['role_id'] = 1;
+
             // dd($data);
 
-            // Handle the Image Upload
             if ($this->avatar && !is_string($this->avatar)) {
                 // This stores the file in storage/app/public/images
                 $data['avatar'] = $this->avatar->store('images', 'public');
             }
 
             // dd($data);
-            auth()->user()->profile()->updateOrCreate(
-                ['user_id' => auth()->id()],
-                $data
+            $admin->profile()->updateOrCreate(
+            [
+                'user_id' => $admin->id,
+                'role_id' => 1,
+                ],
+            $data
             );
 
            $this->dispatch('profile-updated', [

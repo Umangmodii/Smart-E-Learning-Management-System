@@ -22,6 +22,6 @@ class Admin extends Authenticatable
     public function profile(): HasOne
     {
         // Adjust 'admin_id' if your profile table uses a different foreign key
-        return $this->hasOne(User_Profile::class, 'user_id'); 
+        return $this->hasOne(User_Profile::class, 'user_id')->where('role_id', 1);
     }
 }

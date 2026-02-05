@@ -46,7 +46,6 @@ Route::get('/login', Login::class)->name('login');
 // Register Route
 Route::get('/register', Register::class)->name('register');
 
-//  Protected Routes
 // Find the generic dashboard route and update it to this:
 Route::middleware(['auth'])->get('/dashboard', function () {
     // If the logged-in user is a Super Admin, kick them out of the student area

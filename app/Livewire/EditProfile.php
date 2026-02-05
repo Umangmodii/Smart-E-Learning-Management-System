@@ -33,21 +33,21 @@ class EditProfile extends Component
     public function updateProfile()
     {
         try {
-            $this->validate([
-                'avatar' => 'nullable|image|max:1024'
-            ]);   
+            // $this->validate([
+            //     'avatar' => 'nullable|image|max:1024'
+            // ]);   
 
             $data = $this->only([
-                'dob', 'gender', 'country', 'city', 'language', 'bio', 'phone'
+                'dob', 'gender', 'country', 'city', 'language', 'bio', 'phone','avatar'
             ]);
 
-            // Handle the Image Upload
             if ($this->avatar && !is_string($this->avatar)) {
                 // This stores the file in storage/app/public/images
                 $data['avatar'] = $this->avatar->store('images', 'public');
             }
 
             // dd($data);
+
             auth()->user()->profile()->updateOrCreate(
                 ['user_id' => auth()->id()],
                 $data
