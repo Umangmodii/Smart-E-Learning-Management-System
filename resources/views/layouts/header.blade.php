@@ -40,7 +40,7 @@
                                                         {{ $child->name }}
                                                     </a>
                                                 </li>
-                                            @endforeach
+                                        @endforeach
                                         </ul>
                                     @endif
                                 </li>
@@ -52,7 +52,7 @@
                 </li>
             </ul>
 
-            <form class="d-flex flex-grow-1 mx-lg-4 my-2 my-lg-0" style="max-width: 700px;" role="search">
+            {{-- <form class="d-flex flex-grow-1 mx-lg-4 my-2 my-lg-0" style="max-width: 700px;" role="search">
                 <div class="input-group custom-search-group w-100">
                     <span class="input-group-text bg-light border-dark border-end-0 rounded-start-pill ps-3">
                         <i class="bi bi-search text-muted"></i>
@@ -62,7 +62,9 @@
                            placeholder="Search for anything..." 
                            style="height: 46px; font-size: 0.95rem;">
                 </div>
-            </form>
+            </form> --}}
+
+            @livewire('search')
 
             <ul class="navbar-nav align-items-center gap-2">
                 <li class="nav-item">

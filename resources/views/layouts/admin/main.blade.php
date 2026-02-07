@@ -85,8 +85,8 @@
                 </li>
 
                 <li>
-                    <a href="{{ url('admin/courses') }}" class="{{ request()->is('admin/courses*') ? 'active' : '' }}">
-                        <i class="bi bi-book me-2"></i> <span>Courses</span>
+                    <a href="{{ url('admin/manage-courses') }}" class="{{ request()->is('admin/manage-courses*') ? 'active' : '' }}">
+                        <i class="bi bi-book me-2"></i> <span>Manage Courses</span>
                     </a>
                 </li>
 

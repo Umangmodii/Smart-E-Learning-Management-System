@@ -23,9 +23,10 @@ use App\Livewire\Admin\ActiveInstructors;
 use App\Livewire\Instructor\InstructorProfile;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Banner;
-use App\Http\Controllers\frontend\BannerController;
+use App\Http\Controllers\frontend\HomeController;
 use App\Livewire\CourseDetails;
 use App\Livewire\Instructor\CoursesController;
+use App\Livewire\Admin\ManageCourseController;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -34,11 +35,12 @@ Route::get('/', function () {
 return view('layouts.app');
 });
 // Banner Route
-Route::get('/', [BannerController::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 // Course Details Route
 Route::get('/categories/course/{category_slug}/{course_slug?}', CourseDetails::class)
     ->name('course-details');
+    
 
 // Login Route
 Route::get('/login', Login::class)->name('login');
@@ -101,6 +103,7 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
         Route::get('/instructors/active',ActiveInstructors::class)->name('admin.active-requests');
         Route::get('/categories',Categories::class)->name('admin.categories');
         Route::get('/banner', Banner::class)->name('admin.banners');
+        Route::get('/manage-courses', ManageCourseController::class)->name('admin.manage-courses');
 });
 
 // ----------------------------  Instructor  ---------------------------------------------

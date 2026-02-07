@@ -37,7 +37,7 @@ class Course extends Model
      */
     public function instructor()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Instructor::class, 'user_id');
     }
 
     /**
@@ -67,14 +67,25 @@ class Course extends Model
     }
     
     // Accessor for status badge
-    public function getStatusBadgeAttribute()
+    public function getStatusColorAttribute()
     {
         return match($this->status) {
-            0 => '<span class="badge bg-secondary">Draft</span>',
-            1 => '<span class="badge bg-warning text-dark">Pending Review</span>',
-            2 => '<span class="badge bg-success">Published</span>',
-            3 => '<span class="badge bg-danger">Rejected</span>',
-            default => '<span class="badge bg-dark">Unknown</span>',
+            0 => 'secondary', // Draft
+            1 => 'warning',   // Pending
+            2 => 'success',   // Published
+            3 => 'danger',    // Rejected
+            default => 'dark',
+        };
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        return match($this->status) {
+            0 => 'Draft',
+            1 => 'Review',
+            2 => 'Live',
+            3 => 'Rejected',
+            default => 'Unknown',
         };
     }
 }

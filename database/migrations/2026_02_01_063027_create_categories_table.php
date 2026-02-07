@@ -28,7 +28,7 @@ return new class extends Migration
             
             $table->boolean('status')->default(1); // 1 = Active, 0 = Inactive
             $table->integer('order_priority')->default(0); // For menu sorting
-            $table->timestamps();
+        $table->timestamps();
         });
     }
 
