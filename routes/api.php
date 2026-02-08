@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Instructor\InstructorAuthController;
 use App\Http\Controllers\Api\Instructor\InstructorProfile;
 use App\Http\Controllers\Api\Admin\CategoryApiController;
 use App\Http\Controllers\Api\Admin\BannerApiController;
+use App\Http\Controllers\Api\Admin\CourseDetails;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -45,6 +46,7 @@ Route::middleware(['auth:admin_api', 'isAdmin'])->group(function () {
       Route::get('/categories', [CategoryApiController::class, 'index']);
       Route::get('/banners-list', [BannerApiController::class, 'fetch_banner']);
       Route::post('/banners', [BannerApiController::class, 'store']);
+      Route::get('/courses-details',[CourseDetails::class,'index']);
 });
 
 // ----------------------------  Instructor ---------------------------------------------

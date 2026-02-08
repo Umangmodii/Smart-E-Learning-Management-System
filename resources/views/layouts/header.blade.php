@@ -64,7 +64,7 @@
                 </div>
             </form> --}}
 
-            @livewire('search')
+        @livewire('search')
 
             <ul class="navbar-nav align-items-center gap-2">
                 <li class="nav-item">

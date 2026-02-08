@@ -1,5 +1,4 @@
 <div class="d-flex flex-grow-1 mx-lg-4 my-2 my-lg-0 position-relative" style="max-width: 700px;">
-    {{-- Search Input Group --}}
     <div class="input-group custom-search-group w-100 shadow-sm rounded-pill overflow-hidden border border-dark">
         <span class="input-group-text bg-white border-0 ps-3">
             <i class="bi bi-search text-muted"></i>
@@ -12,12 +11,10 @@
             style="height: 46px; font-size: 0.95rem;">
     </div>
 
-    {{-- Auto-Suggestion Dropdown --}}
     @if(strlen($search) >= 2)
         <div class="position-absolute w-100 shadow-lg bg-white rounded-3 border mt-2 overflow-hidden" 
              style="z-index: 2000; top: 100%; left: 0;">
             
-            {{-- Shimmer Loading State --}}
             <div wire:loading wire:target="search" class="p-0">
                 @for($i = 0; $i < 3; $i++)
                     <div class="d-flex align-items-center p-3 border-bottom">
@@ -30,7 +27,6 @@
                 @endfor
             </div>
 
-            {{-- Real Results --}}
             <div wire:loading.remove wire:target="search">
                 @forelse($results as $course)
                     <a href="{{ route('course-details', ['category_slug' => $course->category->slug, 'course_slug' => $course->slug]) }}" 

@@ -37,9 +37,11 @@ return view('layouts.app');
 // Banner Route
 Route::get('/', [HomeController::class, 'index']);
 
-// Course Details Route
+// Categories Details Route
 Route::get('/categories/course/{category_slug}/{course_slug?}', CourseDetails::class)
     ->name('course-details');
+
+    
     
 
 // Login Route

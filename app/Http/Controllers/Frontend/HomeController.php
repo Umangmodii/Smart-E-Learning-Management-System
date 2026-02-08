@@ -11,26 +11,28 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // Fetch active banners
         $banners = Banner::where('status', 1)
             ->orderBy('order_priority', 'asc')
             ->get();
 
-        // Fetch published courses (Status 2 = Published)
         $courses = Course::where('status', 2)
-            ->with(['instructor', 'category']) // Load relations to show name and category
+            ->with(['instructor', 'category']) 
             ->orderBy('created_at', 'desc')
-            ->take(8) // Show top 8 courses on home
+            ->take(8) 
             ->get();
 
         return view('index', compact('banners', 'courses'));
     }
 
-        public function show($slug)
+    public function show($category_slug, $course_slug) 
     {
-        // Find course by slug, or fail with 404 if not found
-        $course = Course::where('slug', $slug)->with(['instructor', 'category'])->firstOrFail();
+    $course = Course::where('slug', $course_slug)
+        ->whereHas('category', function ($query) use ($category_slug) {
+            $query->where('slug', $category_slug);
+        })
+        ->with(['instructor', 'category'])
+        ->firstOrFail(); 
 
-        return view('instructor.course-details', compact('course'));
+    return view('instructor.course-details', compact('course'));
     }
 }

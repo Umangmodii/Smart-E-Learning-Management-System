@@ -24,89 +24,85 @@
     <div class="wrapper">
         <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
-        <nav id="sidebar" class="bg-dark text-white">
-            <div class="sidebar-header px-3 py-4 border-bottom border-secondary">
-                <a href="{{ url('admin/dashboard') }}" class="text-decoration-none d-flex align-items-center justify-content-center">
-                    <i class="bi bi-mortarboard-fill text-white fs-3 me-2"></i>
-                    <div class="text-start">
-                        <h5 class="fw-bold text-white mb-0" style="letter-spacing: 1.5px;">SMART LMS</h5>
-                    </div>
-                </a>
-            </div>
+  <nav id="sidebar" class="bg-dark text-white">
+    <div class="sidebar-header px-3 py-4 border-bottom border-secondary text-center">
+        <a href="{{ url('admin/dashboard') }}" class="text-decoration-none d-flex align-items-center justify-content-center">
+            <i class="bi bi-mortarboard-fill text-white fs-3 me-2"></i>
+            <h5 class="fw-bold text-white mb-0" style="letter-spacing: 1.5px;">SMART LMS</h5>
+        </a>
+    </div>
 
-            <div class="px-3 mt-3 mb-2 sidebar-search">
-                <div class="input-group border-secondary border rounded">
-                    <span class="input-group-text bg-transparent border-0 text-secondary pe-0">
-                        <i class="bi bi-search small"></i>
-                    </span>
-                    <input type="text" id="menuSearch" class="form-control bg-transparent border-0 text-white shadow-none py-2" 
-                           placeholder="Search menu..." style="font-size: 0.85rem;">
-                </div>
-            </div>
+    <div class="px-3 mt-3 mb-2 sidebar-search">
+        <div class="input-group border-secondary border rounded">
+            <span class="input-group-text bg-transparent border-0 text-secondary pe-0">
+                <i class="bi bi-search small"></i>
+            </span>
+            <input type="text" id="menuSearch" class="form-control bg-transparent border-0 text-white shadow-none py-2" 
+                   placeholder="Search menu..." style="font-size: 0.85rem;">
+        </div>
+    </div>
 
-            <ul class="list-unstyled components mt-2" id="sidebarMenu">
-                <li>
-                    <a href="{{ url('instructor/dashboard') }}" class="d-flex align-items-center {{ request()->is('admin/dashboard') ? 'active' : '' }}">
-                        <i class="bi bi-speedometer2 me-2"></i> <span>Dashboard</span>
-                    </a>
-                </li>
+    <ul class="list-unstyled components mt-2" id="sidebarMenu">
+        <li>
+            <a href="{{ url('instructor/dashboard') }}" 
+               class="d-flex align-items-center {{ request()->is('instructor/dashboard') ? 'active' : '' }}">
+                <i class="bi bi-speedometer2 me-2"></i> <span>Dashboard</span>
+            </a>
+        </li>
 
-                {{-- <li class="nav-label text-uppercase small px-3 mt-4 mb-2">User Hub</li>
-                <li>
-                    <a href="#instructorSubmenu" data-bs-toggle="collapse" 
-                       aria-expanded="{{ request()->is('admin/instructors*') ? 'true' : 'false' }}" 
-                       class="dropdown-toggle d-flex align-items-center justify-content-between {{ request()->is('admin/instructors*') ? 'active' : '' }}">
-                        <div><i class="bi bi-person-badge-fill me-2"></i> <span>Instructor Hub</span></div>
-                        <i class="bi bi-chevron-down small"></i>
-                    </a>
-                    <ul class="collapse list-unstyled ps-3" id="instructorSubmenu">
-                        <li><a href=""><i class="bi bi-clock-history me-2"></i> Pending Approval</a></li>
-                        <li><a href=""><i class="bi bi-check-circle-fill me-2"></i> Active List</a></li>
-                    </ul>
-                </li> --}}
-                <li>
-                    <a href="{{ url('admin/students') }}" class="d-flex align-items-center {{ request()->is('admin/students*') ? 'active' : '' }}">
-                        <i class="bi bi-people-fill me-2"></i> <span>Enrolled Students</span>
-                    </a>
-                </li>
+        <li>
+            <a href="{{ url('admin/students') }}" 
+               class="d-flex align-items-center {{ request()->is('admin/students*') ? 'active' : '' }}">
+                <i class="bi bi-people-fill me-2"></i> <span>Enrolled Students</span>
+            </a>
+        </li>
 
-                <li class="nav-label text-uppercase small px-3 mt-4 mb-2">LMS Content</li>
+        <li>
+            @php 
+                $isCourseActive = request()->is('instructor/courses*') || request()->is('admin/courses/reviews*');
+            @endphp
+            
+            <a href="#courseSubmenu" data-bs-toggle="collapse" 
+               aria-expanded="{{ $isCourseActive ? 'true' : 'false' }}" 
+               class="dropdown-toggle d-flex align-items-center justify-content-between {{ $isCourseActive ? 'active' : '' }}">
+                <div><i class="bi bi-play-btn-fill me-2"></i> <span>Course Catalog</span></div>
+                <i class="bi bi-chevron-down small transition-icon"></i>
+            </a>
+            
+            <ul class="collapse list-unstyled sub-menu-bg {{ $isCourseActive ? 'show' : '' }}" id="courseSubmenu">
                 <li>
-                    <a href="#courseSubmenu" data-bs-toggle="collapse" class="dropdown-toggle d-flex align-items-center justify-content-between">
-                        <div><i class="bi bi-play-btn-fill me-2"></i> <span>Course Catalog</span></div>
-                        <i class="bi bi-chevron-down small"></i>
-                    </a>
-                    <ul class="collapse list-unstyled ps-3" id="courseSubmenu">
-                        <li><a href="{{ url('instructor/courses') }}" class="py-2"><i class="bi bi-list-ul me-2"></i> All Courses</a></li>
-                        <li><a href="{{ url('instructor/courses/categories') }}" class="py-2"><i class="bi bi-tags-fill me-2"></i> Course Categories</a></li>
-                        <li><a href="{{ url('admin/courses/reviews') }}" class="py-2"><i class="bi bi-star-fill me-2"></i> Quality Reviews</a></li>
-                    </ul>
-                </li>
-
-                <li class="nav-label text-uppercase small px-3 mt-4 mb-2">Financials</li>
-                <li>
-                    <a href="{{ url('admin/revenue') }}" class="d-flex align-items-center">
-                        <i class="bi bi-wallet2 me-2"></i> <span>Platform Revenue</span>
+                    <a href="{{ url('instructor/courses') }}" class="py-2 {{ request()->is('instructor/courses*') ? 'active-child' : '' }}">
+                        <i class="bi bi-list-ul me-2"></i> All Courses
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('admin/payouts') }}" class="d-flex align-items-center">
-                        <i class="bi bi-cash-stack me-2"></i> <span>Instructor Payouts</span>
+                    <a href="{{ url('admin/courses/reviews') }}" class="py-2 {{ request()->is('admin/courses/reviews*') ? 'active-child' : '' }}">
+                        <i class="bi bi-star-fill me-2"></i> Reviews
                     </a>
-                </li>
-
-                <li class="nav-label text-uppercase small px-3 mt-4 mb-2">System</li>
-                <li>
-                    <a href="{{ url('admin/settings') }}" class="d-flex align-items-center {{ request()->is('admin/settings*') ? 'active' : '' }}">
-                        <i class="bi bi-sliders me-2"></i> <span>Global Settings</span>
-                    </a>
-                </li>
-                <li id="noMenuResult" class="text-center py-4" style="display: none;">
-                    <i class="bi bi-search text-muted d-block fs-4 mb-2"></i>
-                    <small class="text-muted">No matches found</small>
                 </li>
             </ul>
-        </nav>
+        </li>
+
+        <li>
+            <a href="{{ url('admin/revenue') }}" 
+               class="d-flex align-items-center {{ request()->is('admin/revenue*') ? 'active' : '' }}">
+                <i class="bi bi-wallet2 me-2"></i> <span>Platform Revenue</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url('admin/settings') }}" 
+               class="d-flex align-items-center {{ request()->is('admin/settings*') ? 'active' : '' }}">
+                <i class="bi bi-sliders me-2"></i> <span>Global Settings</span>
+            </a>
+        </li>
+
+        <li id="noMenuResult" class="text-center py-4" style="display: none;">
+            <i class="bi bi-search text-muted d-block fs-4 mb-2"></i>
+            <small class="text-muted">No matches found</small>
+        </li>
+    </ul>
+  </nav>
 
         <div id="content">
             <nav class="main-header d-flex justify-content-between align-items-center shadow-sm px-3 py-2 bg-white sticky-top">

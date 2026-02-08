@@ -6,7 +6,7 @@
                     @foreach($breadcrumbs as $item)
                         <li class="breadcrumb-item {{ $loop->last ? 'active fw-bold' : '' }}">
                             @if($item['url'] && !$loop->last)
-                                <a href="{{ $item['url'] }}" class="text-decoration-none">{{ $item['label'] }}</a>
+                                <a href="{{ $item['url'] }}" class="text-decoration-none text-primary">{{ $item['label'] }}</a>
                             @else
                                 {{ $item['label'] }}
                             @endif
@@ -21,19 +21,20 @@
         {{-- Category Header --}}
         <div class="mb-4 mb-md-5">
             <h2 class="fw-bold text-dark display-6 fs-2 fs-md-1">{{ $category->name }} Courses</h2>
-            <p class="text-muted lead fs-6">Explore our top-rated courses in {{ $category->name }}.</p>
+            <p class="text-muted lead fs-6">Explore our top-rated professional courses in {{ $category->name }}.</p>
         </div>
 
+        {{-- Shimmer Container --}}
         <div id="shimmer-container">
             <div class="row g-2 g-md-4">
                 @for ($i = 0; $i < 8; $i++)
                 <div class="col-6 col-md-6 col-lg-3">
                     <div class="shimmer-card border-0 shadow-sm rounded-3 overflow-hidden">
                         <div class="shimmer-img animate-shimmer"></div>
-                        <div class="p-2 p-md-3">
-                            <div class="shimmer-line animate-shimmer w-75 mb-2"></div>
+                        <div class="p-3">
+                            <div class="shimmer-line animate-shimmer w-100 mb-2"></div>
                             <div class="shimmer-line animate-shimmer w-50 mb-3"></div>
-                            <div class="d-flex justify-content-between">
+                            <div class="d-flex justify-content-between mt-4">
                                 <div class="shimmer-line animate-shimmer w-25"></div>
                                 <div class="shimmer-line animate-shimmer w-25"></div>
                             </div>
@@ -44,35 +45,64 @@
             </div>
         </div>
 
+        {{-- Real Content --}}
         <div id="real-content" style="display: none;">
             <div class="row g-2 g-md-4">
                 @forelse($courses as $course)
                     <div class="col-6 col-md-6 col-lg-3">
                         <a href="{{ route('course-details', ['category_slug' => $category->slug, 'course_slug' => $course->slug]) }}" 
-                           class="card h-100 border-0 shadow-sm text-decoration-none transition-hover rounded-3 overflow-hidden">
+                           class="card h-100 border-0 shadow-sm text-decoration-none transition-hover rounded-3 overflow-hidden course-card">
                             
-                            <div class="card-img-wrapper">
+                            <div class="card-img-wrapper position-relative">
                                 <img src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : 'https://placehold.co/400x225' }}" 
                                      class="card-img-top" alt="{{ $course->title }}">
+                                
+                                {{-- Level Badge --}}
+                                <div class="position-absolute bottom-0 start-0 m-2">
+                                    <span class="badge bg-white text-dark shadow-sm extra-small text-uppercase">
+                                        <i class="bi bi-bar-chart-fill me-1 text-primary"></i>{{ str_replace('_', ' ', $course->level) }}
+                                    </span>
+                                </div>
                             </div>
                             
-                            <div class="card-body p-2 p-md-3">
+                            <div class="card-body p-2 p-md-3 d-flex flex-column">
                                 <h6 class="fw-bold text-dark mb-1 text-truncate-2 course-title">{{ $course->title }}</h6>
-                                <p class="small text-muted mb-1 mb-md-2 text-truncate">By {{ $course->instructor->name ?? 'Expert' }}</p>
+                                <p class="extra-small text-muted mb-2 text-truncate">By {{ $course->instructor->name ?? 'Expert Instructor' }}</p>
                                 
-                                <div class="text-warning extra-small mb-1 mb-md-2">
-                                    <i class="bi bi-star-fill"></i>
-                                    <span class="fw-bold">4.5</span>
-                                    <span class="text-muted d-none d-md-inline ms-1">(1.2k)</span>
+                                {{-- Ratings --}}
+                                <div class="d-flex align-items-center mb-2">
+                                    <span class="text-warning extra-small me-1">
+                                        <i class="bi bi-star-fill"></i> 4.8
+                                    </span>
+                                    <span class="text-muted extra-small d-none d-md-inline">(2.4k)</span>
+                                </div>
+
+                                {{-- Metadata: Duration & Language --}}
+                                <div class="d-flex gap-2 text-muted extra-small mb-3">
+                                    <span><i class="bi bi-clock me-1"></i>{{ gmdate("H:i", $course->total_duration) }}</span>
+                                    <span class="d-none d-md-inline">|</span>
+                                    <span><i class="bi bi-globe me-1"></i>{{ $course->language }}</span>
                                 </div>
                                 
-                                <div class="fw-bold text-dark fs-6 fs-md-5">FREE</div>
+                                {{-- Pricing --}}
+                                <div class="mt-auto pt-2 border-top">
+                                    @if($course->discount_price > 0)
+                                        <span class="fw-bold text-dark fs-6 fs-md-5">₹{{ number_format($course->discount_price, 0) }}</span>
+                                        <span class="text-muted text-decoration-line-through extra-small ms-1">₹{{ number_format($course->price, 0) }}</span>
+                                    @elseif($course->price > 0)
+                                        <span class="fw-bold text-dark fs-6 fs-md-5">₹{{ number_format($course->price, 0) }}</span>
+                                    @else
+                                        <span class="fw-bold text-success fs-6 fs-md-5">FREE</span>
+                                    @endif
+                                </div>
                             </div>
                         </a>
                     </div>
                 @empty
                     <div class="col-12 text-center py-5">
+                        <i class="bi bi-search display-1 text-light mb-3"></i>
                         <h4 class="text-muted">No courses found in this category yet.</h4>
+                        <a href="{{ url('/') }}" class="btn btn-primary mt-3 rounded-pill">Explore Other Categories</a>
                     </div>
                 @endforelse
             </div>
@@ -80,33 +110,21 @@
     </div>
 
     <style>
-        /* Industry Standard Card Height Fix */
-        .card-img-wrapper {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            overflow: hidden;
-        }
-        .card-img-top {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .course-card { background: #fff; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .course-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.08) !important; }
 
-        /* --- SHIMMER CSS --- */
+        .card-img-wrapper { position: relative; width: 100%; padding-top: 56.25%; overflow: hidden; }
+        .card-img-top { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+
         .shimmer-card { background: #fff; height: 100%; border: 1px solid #eee; }
         .shimmer-img { height: 120px; background: #f0f0f0; }
         @media (min-width: 768px) { .shimmer-img { height: 160px; } }
         
         .shimmer-line { height: 10px; background: #f0f0f0; border-radius: 4px; }
-        
         .animate-shimmer {
             background: linear-gradient(90deg, #f6f7f8 0%, #edeef1 20%, #f6f7f8 40%, #f6f7f8 100%);
             background-size: 1000px 100%;
-            animation: shimmer-animation 2s infinite linear;
+            animation: shimmer-animation 1.5s infinite linear;
         }
 
         @keyframes shimmer-animation {
@@ -115,17 +133,12 @@
         }
 
         /* --- UI POLISH --- */
-        .extra-small { font-size: 0.75rem; }
-        .course-title { font-size: 0.85rem; line-height: 1.2; height: 2rem; }
+        .extra-small { font-size: 0.7rem; font-weight: 600; }
+        .course-title { font-size: 0.85rem; line-height: 1.3; height: 2.3rem; overflow: hidden; }
         @media (min-width: 768px) {
-            .course-title { font-size: 1rem; height: 2.5rem; }
+            .course-title { font-size: 1rem; height: 2.6rem; }
         }
 
-        .transition-hover:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1) !important;
-            transition: 0.3s;
-        }
         .text-truncate-2 { 
             display: -webkit-box; 
             -webkit-line-clamp: 2; 
@@ -137,9 +150,14 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             setTimeout(function() {
-                document.getElementById('shimmer-container').style.display = 'none';
-                document.getElementById('real-content').style.display = 'block';
-            }, 3000);
+                const shimmer = document.getElementById('shimmer-container');
+                const content = document.getElementById('real-content');
+                if(shimmer) shimmer.style.display = 'none';
+                if(content) {
+                    content.style.display = 'block';
+                    content.classList.add('animate__animated', 'animate__fadeIn');
+                }
+            }, 3000); // 3 seconds delay
         });
     </script>
 </div>

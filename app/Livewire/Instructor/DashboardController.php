@@ -3,6 +3,8 @@
 namespace App\Livewire\Instructor;
 
 use Livewire\Component;
+use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Component
 {
@@ -17,7 +19,13 @@ class DashboardController extends Component
     }
     public function render()
     {
-        return view('livewire.instructor.dashboard')
-        ->layout('layouts.instructor.dashboard',['title' => 'Instructor Dashboard']);
+       $instructorId = Auth::id();
+        
+        return view('livewire.instructor.dashboard', [
+            'totalCourses'   => Course::where('user_id', $instructorId)->count(),
+            'activeCourses'  => Course::where('user_id', $instructorId)->where('status', 2)->count(),
+            'pendingCourses' => Course::where('user_id', $instructorId)->where('status', 1)->count(),
+            'latestCourses'  => Course::where('user_id', $instructorId)->latest()->take(5)->get()
+        ])->layout('layouts.instructor.dashboard',['title' => 'Instructor Dashboard']);
     }
 }

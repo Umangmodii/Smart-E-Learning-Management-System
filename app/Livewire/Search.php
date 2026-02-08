@@ -13,7 +13,7 @@ class Search extends Component
 
         if (strlen($this->search) >= 2) {
             $results = Course::where('title', 'like', '%' . $this->search . '%')
-                ->where('status', 2) // Assuming 2 = Published
+                ->where('status', 2) // 2 = Published
                 ->with(['category', 'instructor'])
                 ->take(6)
                 ->get();

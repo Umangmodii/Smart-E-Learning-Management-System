@@ -24,12 +24,25 @@ class Course extends Model
         'status', // 0:Draft, 1:Pending, 2:Published, 3:Rejected
         'admin_feedback',
         'submitted_at',
-        'approved_at'
+        'approved_at',
+        'short_description',
+        'description',
+        'price',
+        'discount_price',
+        'level',
+        'language',
+        'meta_keywords',
+        'video_promo_path',
+        'total_duration',
+        'is_published',
     ];
-
+    
     protected $casts = [
         'submitted_at' => 'datetime',
         'approved_at' => 'datetime',
+        'price' => 'decimal:2',
+        'discount_price' => 'decimal:2',
+        'total_duration' => 'integer',
     ];
 
     /**
