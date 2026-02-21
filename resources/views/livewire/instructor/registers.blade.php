@@ -123,11 +123,12 @@
                                 </div>
                             </div>
 
-                        <div class="text-center mt-3 md-2 color-gray">
+                      <div class="text-center mt-3 mb-2 text-muted">
                             Already have an account?
-                            <a href="{{ url('instructor/login') }}">Sign In</a>
+                            <a href="{{ url('instructor/login') }}" class="fw-semibold text-primary text-decoration-none">
+                                Sign In
+                            </a>
                         </div>
-
                     </div>
                 </div>
             </div>

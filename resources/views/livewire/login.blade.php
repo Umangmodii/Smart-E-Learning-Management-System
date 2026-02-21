@@ -100,10 +100,31 @@
                                 </div>
                             </div>
 
-                       <p>By signing up, you agree to our Terms of Use and Privacy Policy.</p>
+                             <div class="form-check mt-3 mb-3">
 
-                        <div class="text-center mt-3 color-gray">
-                            Don't have an account? <a href="{{ route(name: 'register') }}">Sign Up</a>
+                                <input class="form-check-input"
+                                    type="checkbox"
+                                    id="agreeTerms"
+                                    required>
+
+                                <label class="form-check-label small text-muted" for="agreeTerms">
+                                    By signing up, you agree to our 
+                                    <a href="#" class="text-primary text-decoration-none">
+                                        Terms of Use
+                                    </a> 
+                                    and 
+                                    <a href="#" class="text-primary text-decoration-none">
+                                        Privacy Policy
+                                    </a>.
+                                </label>
+
+                            </div>
+
+                        <div class="text-center mt-3 mb-2 text-muted">
+                             Don't have an account?
+                            <a href="{{ route('register') }}" class="fw-semibold text-primary text-decoration-none">
+                                Sign Up
+                            </a>
                         </div>
                     </div>
                 </div>

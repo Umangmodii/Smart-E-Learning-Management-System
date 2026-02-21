@@ -23,10 +23,13 @@ use App\Livewire\Admin\ActiveInstructors;
 use App\Livewire\Instructor\InstructorProfile;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Banner;
-use App\Http\Controllers\frontend\HomeController;
+use App\Http\Controllers\Frontend\HomeController;
 use App\Livewire\CourseDetails;
 use App\Livewire\Instructor\CoursesController;
 use App\Livewire\Admin\ManageCourseController;
+use App\Http\Controllers\SitemapController;
+use App\Livewire\Pages\About;
+use App\Livewire\Pages\Contact;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -37,12 +40,18 @@ return view('layouts.app');
 // Banner Route
 Route::get('/', [HomeController::class, 'index']);
 
+// Site Map Route
+Route::get('/sitemap.xml', [SitemapController::class, 'index']);
+
+// About Route
+Route::get('/about', About::class)->name('about');
+
+// Contact Route
+Route::get('/contact', Contact::class)->name('contact');
+
 // Categories Details Route
 Route::get('/categories/course/{category_slug}/{course_slug?}', CourseDetails::class)
     ->name('course-details');
-
-    
-    
 
 // Login Route
 Route::get('/login', Login::class)->name('login');

@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <link href="{{ asset('instructor/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
 
     @livewireStyles
 

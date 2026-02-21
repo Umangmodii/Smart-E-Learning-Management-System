@@ -17,18 +17,36 @@
             </nav>
         </x-slot>
 
-        <div class="col-lg-6">
-            <h1 class="display-4 fw-bold text-dark">Come teach <br><span class="text-primary">with us</span></h1>
-            <p class="lead text-muted">Become an instructor and change lives — including your own.</p>
-            
-         
-                <a href="{{ url('instructor/register') }}?mode=instructor" class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow">Get Started</a>
-         
-        </div>
-            <div class="col-lg-6 d-none d-lg-block">
-                <img src="{{ asset('instructor/instructor_teach.jpg') }}" class="img-fluid rounded-4 shadow" alt="Teaching">
-            </div>
+       <div class="row align-items-center">
+
+    <!-- IMAGE -->
+    <div class="col-12 col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
+        <img src="{{ asset('instructor/instructor_teach.jpg') }}"
+             class="img-fluid rounded-4 shadow"
+             alt="Teaching">
     </div>
+
+    <!-- TEXT -->
+    <div class="col-12 col-lg-6 order-2 order-lg-1 text-center text-lg-start">
+
+        <h1 class="display-4 fw-bold text-dark">
+            Come teach <br>
+            <span class="text-primary">with us</span>
+        </h1>
+
+        <p class="lead text-muted">
+            Become an instructor and change lives — including your own.
+        </p>
+
+        <a href="{{ url('instructor/register') }}?mode=instructor"
+           class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow">
+            Get Started
+        </a>
+
+    </div>
+ </div>
+
+ </div>
 
     <div class="row g-4 text-center mt-5">
         <div class="col-md-4">

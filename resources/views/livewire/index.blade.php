@@ -98,6 +98,44 @@
             .mobile-scroll { display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; }
             .no-scrollbar::-webkit-scrollbar { display: none; }
         }
+
+     /* Ensure the whole banner is visible */
+    .banner-bg {
+        width: 100%;
+        height: 450px; /* Desktop Height */
+        background-size: 100% 100%; /* Forces the whole image to fit the box */
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+    /* Remove Arrows Completely */
+    #hero-slider .carousel-control-prev,
+    #hero-slider .carousel-control-next {
+        display: none !important;
+    }
+
+    @media (max-width: 768px) {
+        .banner-bg {
+            height: 250px; 
+            background-size: cover; 
+        }
+
+        #hero-slider .display-4 {
+            font-size: 1.5rem !important;
+        }
+
+        #hero-slider .lead {
+            font-size: 0.9rem !important;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* Limits subtitle to 2 lines so it doesn't overflow */
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    }
+
     </style>
 </head>
 <body>
@@ -107,36 +145,54 @@
 <div class="main-wrapper">
     {{-- Banner Section --}}
     @if($banners->count() > 0)
-    <section id="hero-slider" class="carousel slide carousel-fade" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            @foreach($banners as $index => $banner)
-                <div class="carousel-item {{ $index == 0 ? 'active' : '' }}" data-bs-interval="5000">
-                    <div class="banner-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('{{ asset('Storage/' . $banner->image) }}'); height: 450px; background-size: cover; background-position: center;">
-                        <div class="container h-100 d-flex align-items-center">
-                            <div class="text-white col-md-7">
-                                <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">{{ $banner->title }}</h1>
-                                <p class="lead fs-4 animate__animated animate__fadeInUp">{{ $banner->subtitle }}</p>
-                            </div>
+   <section id="hero-slider" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        @foreach($banners as $index => $banner)
+            <div class="carousel-item {{ $index == 0 ? 'active' : '' }}" data-bs-interval="5000">
+                <div class="banner-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('{{ asset('Storage/' . $banner->image) }}');">
+                    <div class="container h-100 d-flex align-items-center">
+                        <div class="text-white col-12 col-md-7 text-center text-md-start">
+                            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">
+                                {{ $banner->title }}
+                            </h1>
+                            <p class="lead fs-4 animate__animated animate__fadeInUp">
+                                {{ $banner->subtitle }}
+                            </p>
                         </div>
                     </div>
                 </div>
-            @endforeach
-        </div>
+            </div>
+        @endforeach
+    </div>
     </section>
     @endif
 
-    <section class="py-5 bg-white">
-    <div class="container">
-        {{-- Professional Header --}}
-        <div class="d-flex justify-content-between align-items-end mb-4 px-2">
-            <div class="text-start">
-                <h2 class="fw-bold mb-1" style="color: #2d2f31; font-size: 1.75rem;">Skills to transform your career and life</h2>
-                <p class="text-muted mb-0 d-none d-md-block">From critical skills to technical topics, SmartLMS supports your professional development.</p>
-            </div>
-            <div class="text-end">
-                <a href="#" class="btn btn-link text-primary fw-bold text-decoration-none p-0">See All <i class="bi bi-arrow-right"></i></a>
-            </div>
+    <section class="py-3 bg-white">
+        <div class="container">
+        <div class="career-section d-flex flex-column flex-md-row 
+                justify-content-between align-items-start align-items-md-end 
+                mb-4 px-3 px-md-2">
+
+        <!-- LEFT -->
+        <div class="text-start mb-3 mb-md-0">
+
+            <h2 class="fw-bold mb-1 career-title">
+                Skills to transform your career and life
+            </h2>
+
+            <p class="text-muted mb-0 d-none d-md-block">
+                From critical skills to technical topics, SmartLMS supports your professional development.
+            </p>
+
         </div>
+
+        <!-- RIGHT -->
+        <div class="text-start text-md-end">
+            <a href="#" class="btn btn-link text-primary fw-bold text-decoration-none p-0">
+                See All <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
 
         <div class="course-slider-wrapper">
             {{-- Shimmer Loader --}}
@@ -245,6 +301,15 @@
 </section>
 
 <style>
+    /* Mobile Improvements */
+    @media (max-width: 767px) {
+
+        .career-title {
+            font-size: 1.25rem !important;
+            line-height: 1.4;
+        }
+    }
+
     /* Typography & Core */
     .extra-small { font-size: 0.7rem; font-weight: 600; }
     .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -281,7 +346,6 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // Updated to 6000ms as requested
         setTimeout(function() {
             const loader = document.getElementById('shimmer-loader');
             const content = document.getElementById('real-course-content');

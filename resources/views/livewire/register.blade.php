@@ -123,9 +123,32 @@
                                 </div>
                             </div>
 
-                        <div class="text-center mt-3 md-2 color-gray">
+                            
+                            <div class="form-check mt-3 mb-3">
+
+                                <input class="form-check-input"
+                                    type="checkbox"
+                                    id="agreeTerms"
+                                    required>
+
+                                <label class="form-check-label small text-muted" for="agreeTerms">
+                                    By signing up, you agree to our 
+                                    <a href="#" class="text-primary text-decoration-none">
+                                        Terms of Use
+                                    </a> 
+                                    and 
+                                    <a href="#" class="text-primary text-decoration-none">
+                                        Privacy Policy
+                                    </a>.
+                                </label>
+
+                            </div>
+
+                        <div class="text-center mt-3 mb-2 text-muted">
                             Already have an account?
-                            <a href="{{ route('login') }}">Sign In</a>
+                            <a href="{{ route('login') }}" class="fw-semibold text-primary text-decoration-none">
+                                Sign In
+                            </a>
                         </div>
 
                     </div>
