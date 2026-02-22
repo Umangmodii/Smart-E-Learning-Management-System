@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Smart E-Learning | {{ $title ?? 'E-Learning' }} </title>
+    <title>Smart E-Learning | {{ $title ?? 'Home' }} </title>
     <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" type="image/svg+xml">
     <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" sizes="32x32">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -224,7 +224,8 @@
                         <div class="row g-3 px-2 mobile-scroll no-scrollbar">
                             @foreach($chunk as $course)
                             <div class="col-6 col-md-4 col-lg-3 col-6-mobile">
-                                <a href="{{ route('course-details', ['category_slug' => $course->category->slug, 'course_slug' => $course->slug]) }}" class="course-card-link text-decoration-none">
+
+                                <a href="{{ route('course-details', ['course_slug' => $course->slug]) }}" class="text-decoration-none text-dark">
                                     <div class="card h-100 course-card border-0 shadow-sm">
                                         {{-- Image Container --}}
                                         <div class="card-img-container position-relative">
@@ -243,7 +244,10 @@
 
                                         <div class="card-body p-3">
                                             {{-- Title --}}
-                                            <h6 class="course-title fw-bold text-dark mb-1 line-clamp-2" style="height: 2.8rem; overflow: hidden;">{{ $course->title }}</h6>
+                                            <h6 class="course-title fw-bold text-dark mb-1 line-clamp-2" style="height: 3.5rem; overflow: hidden;">{{ $course->title }}</h6>
+                                              <p class="text-muted small mb-2 {{ $viewType == 'grid' ? 'text-truncate-2' : '' }}" style="font-size: 0.85rem; line-height: 1.4;">
+                                                {{ $course->short_description ?? 'Learn the essentials of ' . $course->title . ' and advance your skills with professional training.' }}
+                                            </p>
                                             
                                             {{-- Instructor --}}
                                             <p class="small text-muted mb-1 text-truncate">{{ $course->instructor->name ?? 'Expert Instructor' }}</p>
@@ -275,7 +279,17 @@
                                                         <span class="fw-bold text-success fs-5">FREE</span>
                                                     @endif
                                                 </div>
-                                                <div class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-none extra-small">Enroll</div>
+                                                 <form action="{{ route('add.to.cart', $course->id) }}"
+                                                    method="POST"
+                                                    style="z-index: 2; position: relative;">
+                                                    @csrf
+                                                    <button type="submit"
+                                                        class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-none"
+                                                        onclick="event.stopPropagation();">
+                                                        Add to Cart
+                                                    </button>
+                                                </form>
+
                                             </div>
                                         </div>
                                     </div>
@@ -357,6 +371,36 @@
         }, 6000); 
     });
 </script>
+
+@if(session('success'))
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 9999">
+        <div id="successToast"
+             class="toast align-items-center text-white bg-success border-0 shadow"
+             role="alert"
+             aria-live="assertive"
+             aria-atomic="true"
+             data-bs-delay="5000">
+
+            <div class="d-flex">
+                <div class="toast-body fw-semibold">
+                    {{ session('success') }}
+                </div>
+                <button type="button"
+                        class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast">
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var toastElement = document.getElementById('successToast');
+            var toast = new bootstrap.Toast(toastElement);
+            toast.show();
+        });
+    </script>
+@endif
 
 @include('layouts.footer')
 

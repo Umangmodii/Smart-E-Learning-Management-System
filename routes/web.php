@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\CategoryDetails;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Login;
 use App\Livewire\Register;
@@ -24,12 +25,15 @@ use App\Livewire\Instructor\InstructorProfile;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\Banner;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Livewire\CourseDetails;
+use App\Livewire\Categories as categoryLivewire;
 use App\Livewire\Instructor\CoursesController;
 use App\Livewire\Admin\ManageCourseController;
 use App\Http\Controllers\SitemapController;
 use App\Livewire\Pages\About;
 use App\Livewire\Pages\Contact;
+use App\Livewire\CourseDetails as CoursesDetails;
+use App\Http\Controllers\Frontend\AddToCartController;
+use App\Livewire\Cart;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -40,6 +44,16 @@ return view('layouts.app');
 // Banner Route
 Route::get('/', [HomeController::class, 'index']);
 
+// Mini Cart 
+Route::post('/add-to-cart/{id}', [AddToCartController::class, 'add'])
+    ->name('add.to.cart');
+
+Route::get('/remove-cart/{id}', [AddToCartController::class, 'remove'])
+    ->name('remove.cart');
+
+// Cart Page Route
+Route::get('/cart', Cart::class)->name('cart');
+
 // Site Map Route
 Route::get('/sitemap.xml', [SitemapController::class, 'index']);
 
@@ -49,8 +63,12 @@ Route::get('/about', About::class)->name('about');
 // Contact Route
 Route::get('/contact', Contact::class)->name('contact');
 
-// Categories Details Route
-Route::get('/categories/course/{category_slug}/{course_slug?}', CourseDetails::class)
+// Categories Route
+Route::get('/categories/course/{category_slug}/{course_slug?}', categoryLivewire::class)
+    ->name('category-details');
+
+// Course Details Route
+Route::get('/course/{course_slug}', CoursesDetails::class)
     ->name('course-details');
 
 // Login Route

@@ -7,7 +7,6 @@ use Livewire\Attributes\Computed;
 use App\Models\AdminCategory as Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
 
 class Categories extends Component
 {
@@ -16,18 +15,25 @@ class Categories extends Component
     public $editing_id = null;
     public $breadcrumbs = [];
 
-    public function mount(){
+    public function mount()
+    {
         $this->breadcrumbs = [
             ['label' => 'Dashboard', 'url' => url('/dashboard')],
             ['label' => 'Admin Categories', 'url' => null],
         ];
     }
 
+    /**
+     * Computed properties allow you to access methods like public variables 
+     * in your Blade file using {{ $this->parent_name }}
+     */
+    #[Computed]
     public function parent_name()
     {
-        return $this->parent_id ? Category::find($this->parent_id)?->name : '';
+        return $this->parent_id ? Category::find($this->parent_id)?->name : 'None';
     }
 
+    #[Computed]
     public function parent_slug()
     {
         return $this->parent_id ? Category::find($this->parent_id)?->slug : '';
@@ -36,8 +42,11 @@ class Categories extends Component
     public function switchTab($tab)
     {
         $this->activeTab = $tab;
-        if($tab !== 'edit') {
+        
+        // Ensure data is cleared when moving away from Edit/Create
+        if($tab === 'manage') {
             $this->reset(['name', 'parent_id', 'editing_id', 'order_priority', 'status']);
+            $this->status = 1; // Default status back to Active
         }
         $this->resetValidation();
     }
@@ -45,6 +54,7 @@ class Categories extends Component
     public function edit($id)
     {
         $category = Category::findOrFail($id);
+        
         $this->editing_id = $category->id;
         $this->name = $category->name;
         $this->parent_id = $category->parent_id;
@@ -53,11 +63,14 @@ class Categories extends Component
         
         $this->activeTab = 'edit';
     }
+
     public function store()
     {
         $this->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $this->editing_id,
             'parent_id' => 'nullable|exists:categories,id',
+            'order_priority' => 'required|integer|min:0',
+            'status' => 'required|boolean',
         ]);
 
         try {
@@ -73,6 +86,7 @@ class Categories extends Component
                 Category::find($this->editing_id)->update($data);
                 session()->flash('success', 'Category updated successfully!');
             } else {
+                // Ensure 'created_by' exists in your database table 'categories'
                 $data['created_by'] = Auth::guard('admin')->id();
                 Category::create($data);
                 session()->flash('success', 'New category deployed successfully!');
@@ -80,7 +94,7 @@ class Categories extends Component
 
             $this->switchTab('manage');
         } catch (\Exception $e) {
-            session()->flash('error', 'Something went wrong: ' . $e->getMessage());
+            session()->flash('error', 'Database Error: ' . $e->getMessage());
         }
     }
 
@@ -89,13 +103,14 @@ class Categories extends Component
         $category = Category::findOrFail($id);
         $category->status = !$category->status;
         $category->save();
-        session()->flash('success', 'Status updated.');
+        session()->flash('success', 'Visibility updated.');
     }
+
     public function render()
     {
         return view('livewire.admin.categories', [
             'categories' => Category::with('children')
-                ->whereNull('parent_id')
+                ->whereNull('parent_id') // Get main categories first
                 ->orderBy('order_priority', 'asc')
                 ->get(),
             'parentCategories' => Category::whereNull('parent_id')

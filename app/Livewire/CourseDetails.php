@@ -3,42 +3,42 @@
 namespace App\Livewire;
 
 use Livewire\Component;
-use App\Models\AdminCategory;
-use Illuminate\Http\Request;
 use App\Models\Course;
+
 class CourseDetails extends Component
 {
-    public $category;
-    public $courses;
+    public $course;
     public $breadcrumbs = [];
-    public function mount(Request $request, $category_slug, $course_slug = null)
+    public $selectedLevels = [];
+    public $selectedLanguages = [];
+    public $selectedPrice = null; // free / paid
+    public $courses;
+     public function mount($course_slug)
     {
-        $id = $request->query('id');
-        $targetSlug = $course_slug ?: $category_slug;
-
-        $this->category = AdminCategory::where('id', $id)
-            ->where('slug', $targetSlug)   
-            ->where('status', 1) 
+        $this->course = Course::with('category')
+            ->where('slug', $course_slug)
+            ->where('status', 2)
             ->firstOrFail();
 
-        $this->courses = Course::where('category_id', $this->category->id)
-            ->where('status', 2) 
-            ->with('instructor') 
-            ->latest()
+        $this->relatedCourses = Course::where('category_id', $this->course->category_id)
+            ->where('id','!=',$this->course->id)
+            ->where('status',2)
+            ->take(4)
             ->get();
 
         $this->breadcrumbs = [
             ['label' => 'Home', 'url' => url('/')],
-            ['label' => 'Course Details', 'url' => null],
-            ['label' => $this->category->name, 'url' => null],
+            ['label' => $this->course->category->name, 'url' => route('category-details', ['category_slug' => $this->course->category->slug])],
+            ['label' => $this->course->title, 'url' => null],
         ];
     }
+
     public function render()
     {
         return view('livewire.course-details')
-         ->layout('layouts.app',[
-            'title' => 'Course Details',
-            'breadcrumbs' => $this->breadcrumbs
-        ]);
+             ->layout('layouts.app', [
+                'title' => $this->course->title,
+                'breadcrumbs' => $this->breadcrumbs
+            ]);
     }
 }
