@@ -113,24 +113,55 @@
                                                 @error('title') <div class="text-danger extra-small mt-2 fw-medium">{{ $message }}</div> @enderror
                                             </div>
 
-                                            <div class="col-md-6">
+                                            {{-- <div class="col-md-6">
                                                 <label class="form-label fw-bold text-dark small text-uppercase tracking-wider">Category</label>
                                                 <select wire:model="category_id" class="form-select form-select-lg border-2 shadow-none fw-medium">
                                                     <option value="">Select Category</option>
                                                     @foreach($categories as $cat) <option value="{{ $cat->id }}">{{ $cat->name }}</option> @endforeach
                                                 </select>
+                                            </div> --}}
+
+                                        <div class="row g-4 mb-5">
+
+                                            {{-- Category --}}
+                                            <div class="col-md-6">
+                                                <label class="form-label fw-bold text-dark small text-uppercase tracking-wider">
+                                                    Category
+                                                </label>
+
+                                                <select wire:model="category_id"
+                                                    class="form-select form-select-lg border-2 shadow-none fw-medium">
+                                                    <option value="">Select Category</option>
+
+                                                    @foreach($categories as $cat)
+                                                        <optgroup label="{{ $cat->name }}">
+                                                            <option value="{{ $cat->id }}">
+                                                                {{ $cat->name }} (General)
+                                                            </option>
+
+                                                            @foreach($cat->children as $child)
+                                                                <option value="{{ $child->id }}">
+                                                                    └ {{ $child->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </optgroup>
+                                                    @endforeach
+                                                </select>
                                             </div>
 
+                                            {{-- Skill Level --}}
                                             <div class="col-md-6">
-                                                <label class="form-label fw-bold text-dark small text-uppercase tracking-wider">Skill Level</label>
-                                                <select wire:model="level" class="form-select form-select-lg border-2 shadow-none fw-medium">
+                                                <label class="form-label fw-bold text-dark small text-uppercase tracking-wider">
+                                                    Skill Level
+                                                </label>
+                                                <select wire:model="level"
+                                                    class="form-select form-select-lg border-2 shadow-none fw-medium">
                                                     <option value="beginner">Beginner</option>
                                                     <option value="intermediate">Intermediate</option>
                                                     <option value="advanced">Advanced</option>
                                                     <option value="all_levels">All Levels</option>
                                                 </select>
                                             </div>
-                                        </div>
 
                                         {{-- Pricing & Language --}}
                                     <div class="row g-4 mb-5">

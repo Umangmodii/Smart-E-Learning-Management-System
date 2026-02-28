@@ -169,7 +169,11 @@ class CoursesController extends Component
             'courses' => Course::where('user_id', Auth::id())
                 ->where('status', $this->status)
                 ->with('category')->latest()->paginate(10),
-            'categories' => AdminCategory::all(),
+            // 'categories' => AdminCategory::all(),
+            'categories' => AdminCategory::whereNull('parent_id')
+                ->with('children')
+                ->orderBy('order_priority')
+                ->get(),
             'counts' => [
                 'published' => Course::where('user_id', Auth::id())->where('status', 2)->count(),
                 'pending' => Course::where('user_id', Auth::id())->where('status', 1)->count(),

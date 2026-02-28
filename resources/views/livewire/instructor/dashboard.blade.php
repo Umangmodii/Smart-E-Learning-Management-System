@@ -211,7 +211,22 @@
                                             <span class="badge bg-warning-subtle text-warning px-3 rounded-pill fw-medium">Review</span>
                                         @endif
                                     </td>
-                                    <td class="fw-bold text-dark small">Free</td>
+                                    <td class="fw-bold text-dark small">
+                                        @if($course->price > 0)
+
+                                            @if($course->discount_price && $course->discount_price < $course->price)
+                                             
+                                                <span class="text-danger ms-1">
+                                                    ₹{{ number_format($course->discount_price) }}
+                                                </span>
+                                            @else
+                                                ₹{{ number_format($course->price) }}
+                                            @endif
+
+                                        @else
+                                            <span class="text-success">Free</span>
+                                        @endif
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
