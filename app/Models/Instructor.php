@@ -51,9 +51,12 @@ class Instructor extends Authenticatable
     {
         return $this->isApproved();
     }
-
     public function details()
     {
         return $this->hasOne(InstructorDetails::class, 'instructor_id', 'id');
+    }
+    public function courses()
+    {
+        return $this->hasMany(Course::class,'user_id');
     }
 }

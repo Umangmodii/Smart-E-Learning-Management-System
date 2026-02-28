@@ -314,6 +314,125 @@
     </div>
 </section>
 
+{{-- Categories Section --}}
+{{-- Categories Section --}}
+<section class="py-5">
+    <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">Top Categories</h2>
+        </div>
+
+        {{-- SHIMMER --}}
+        <div id="categories-shimmer">
+            <div class="row g-4">
+                @for ($i = 0; $i < 8; $i++)
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="shimmer-card shadow-sm border-0">
+                            <div class="p-3">
+                                <div class="shimmer-text animate-shimmer w-75 mb-2"></div>
+                                <div class="shimmer-text animate-shimmer w-50"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endfor
+            </div>
+        </div>
+
+        {{-- REAL CONTENT --}}
+        <div id="categories-content" style="display:none;">
+            <div class="row g-4">
+                @foreach($categories as $category)
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <a href="{{ route('category-details', $category->slug) }}"
+                           class="text-decoration-none text-dark">
+                            <div class="card border-0 shadow-sm h-100 text-center">
+                                <div class="card-body">
+                                    <h6 class="fw-bold mb-1">
+                                        {{ $category->name }}
+                                    </h6>
+                                    <p class="text-muted small mb-0">
+                                        {{ $category->courses_count }} Courses
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+    </div>
+</section>
+
+{{-- Popular Instructors --}}
+{{-- Popular Instructors --}}
+<section class="py-5 bg-light">
+    <div class="container">
+
+        <div class="mb-4">
+            <h2 class="fw-bold">Popular Instructors</h2>
+        </div>
+
+        {{-- SHIMMER --}}
+        <div id="instructors-shimmer">
+            <div class="row g-4">
+                @for ($i = 0; $i < 4; $i++)
+                    <div class="col-6 col-md-6 col-lg-3">
+                        <div class="shimmer-card shadow-sm border-0 text-center">
+                            <div class="p-3">
+                                <div class="shimmer-img animate-shimmer rounded-circle mx-auto mb-3"
+                                     style="width:100px;height:100px;"></div>
+
+                                <div class="shimmer-text animate-shimmer w-75 mx-auto mb-2"></div>
+                                <div class="shimmer-text animate-shimmer w-50 mx-auto mb-2"></div>
+                                <div class="shimmer-text animate-shimmer w-25 mx-auto"></div>
+                            </div>
+                        </div>
+                    </div>
+                @endfor
+            </div>
+        </div>
+
+        {{-- REAL CONTENT --}}
+        <div id="instructors-content" style="display:none;">
+            <div class="row g-4">
+                @foreach($instructors as $instructor)
+                    <div class="col-6 col-md-6 col-lg-3">
+                        <div class="card border-0 shadow-sm h-100 text-center">
+                            <div class="card-body">
+
+                                <img src="{{ optional($instructor->details)->avatar 
+                                            ? asset('storage/'.$instructor->details->avatar) 
+                                            : 'https://placehold.co/100x100' }}"
+                                     class="rounded-circle mb-3"
+                                     width="100"
+                                     height="100"
+                                     style="object-fit: cover;">
+
+                                <h6 class="fw-bold mb-1">
+                                    {{ $instructor->name }}
+                                </h6>
+
+                                <p class="text-muted small mb-2">
+                                    {{ optional($instructor->details)->headline }}
+                                </p>
+
+                                <p class="small mb-0">
+                                    <i class="bi bi-book text-primary me-1"></i>
+                                    {{ $instructor->courses_count }} Courses
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+    </div>
+</section>
+
 <style>
     /* Mobile Improvements */
     @media (max-width: 767px) {
@@ -359,17 +478,31 @@
 </style>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        setTimeout(function() {
-            const loader = document.getElementById('shimmer-loader');
-            const content = document.getElementById('real-course-content');
-            if(loader) loader.style.display = 'none';
-            if(content) {
-                content.style.display = 'block';
-                content.classList.add('animate__animated', 'animate__fadeIn');
-            }
-        }, 6000); 
-    });
+document.addEventListener("DOMContentLoaded", function() {
+
+    setTimeout(function() {
+
+        // Courses
+        const courseLoader = document.getElementById('shimmer-loader');
+        const courseContent = document.getElementById('real-course-content');
+        if(courseLoader) courseLoader.style.display = 'none';
+        if(courseContent) courseContent.style.display = 'block';
+
+        // Categories
+        const catLoader = document.getElementById('categories-shimmer');
+        const catContent = document.getElementById('categories-content');
+        if(catLoader) catLoader.style.display = 'none';
+        if(catContent) catContent.style.display = 'block';
+
+        // Instructors
+        const instLoader = document.getElementById('instructors-shimmer');
+        const instContent = document.getElementById('instructors-content');
+        if(instLoader) instLoader.style.display = 'none';
+        if(instContent) instContent.style.display = 'block';
+
+    }, 4000); 
+
+});
 </script>
 
 @if(session('success'))

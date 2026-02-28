@@ -5,7 +5,8 @@ namespace App\Http\Controllers\frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Course; 
-
+use App\Models\AdminCategory;
+use App\Models\Instructor;
 class HomeController extends Controller
 {
     public function index()
@@ -19,10 +20,24 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->take(8) 
             ->get();
-        
+
+        $categories = AdminCategory::withCount(['courses' => function ($query) {
+                $query->where('status', 2);
+                }])->where('status', 1)
+                ->orderBy('name')
+                ->get();
+
+       $instructors = Instructor::with('details')
+            ->withCount(['courses' => function ($query) {
+                $query->where('status', 2);
+            }])
+            ->latest()
+            ->take(4)
+            ->get();
+
         $viewType = 'grid';
 
-        return view('index', compact('banners', 'courses','viewType'));
+        return view('index', compact('banners', 'courses','viewType','categories','instructors'));
     }
 
     public function show($category_slug, $course_slug) 

@@ -333,10 +333,10 @@
                 <div class="card border-0 shadow-sm h-100 course-card {{ $viewType == 'list' ? 'flex-md-row p-2' : '' }}">
                     
                     {{-- COURSE IMAGE --}}
-                    <div class="{{ $viewType == 'list' ? 'col-md-4' : 'w-100' }}">
+                    <div class="{{ $viewType == 'list' ? 'col-md-4' : '' }}">
                         <div class="card-img-wrapper rounded overflow-hidden">
                             <img src="{{ $course->thumbnail ? asset('storage/'.$course->thumbnail) : 'https://placehold.co/400x225' }}" 
-                                 class="card-img-top" alt="{{ $course->title }}" style="height:150px; width:100%;">
+                                 class="card-img-top" alt="{{ $course->title }}" style="aspect-ratio:16/9; object-fit:cover;">
                         </div>
                     </div>
 
@@ -410,8 +410,144 @@
             </nav>
         </div>
     @endif
-</div>
-            </main>
+  </div>
+</main>
+{{-- ================= RELATED COURSES SLIDER ================= --}}
+@if($relatedCourses->count() > 0)
+<section class="py-5 bg-white mt-2">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0">Explore More Courses</h4>
+        </div>
+
+        <div wire:ignore>
+
+            {{-- DESKTOP: 4 per slide --}}
+            <div id="relatedCoursesCarouselDesktop" class="carousel slide d-none d-lg-block" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach($relatedCourses->chunk(4) as $index => $chunk)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                            <div class="row g-4">
+                                @foreach($chunk as $course)
+                                    <div class="col-lg-3">
+                                        <a href="{{ route('course-details', $course->slug) }}" class="text-decoration-none text-dark">
+                                            <div class="card border-0 shadow-sm related-course-card">
+
+                                                <img src="{{ asset('storage/'.$course->thumbnail) }}"
+                                                     class="card-img-top"
+                                                     style="aspect-ratio:16/9; object-fit:cover;">
+
+                                                <div class="card-body">
+                                                    <h6 class="fw-bold mb-2 line-clamp-2 text-truncate-2">{{ $course->title }}</h6>
+
+                                                    <p class="text-muted small mb-2 course-description">
+                                                        {{ $course->short_description ?? 'Learn the essentials of ' . $course->title . ' and advance your skills with professional training.' }}
+                                                    </p>
+
+                                                    <p class="extra-small text-muted mb-1">By {{ $course->instructor->name ?? 'Expert' }}</p>
+
+                                                    <div class="extra-small text-warning mb-2">
+                                                        <i class="bi bi-star-fill"></i> 4.9
+                                                        <span class="text-muted small">(1,250 reviews)</span>
+                                                    </div>
+
+                                                    <span class="fw-bold text-dark fs-5">₹{{ number_format($course->price, 0) }}</span>
+
+                                                    <form action="{{ route('add.to.cart', $course->id) }}" method="POST" class="mt-2">
+                                                        @csrf
+                                                        <button type="submit" 
+                                                                class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-none w-100 w-md-auto"
+                                                                onclick="event.stopPropagation();">
+                                                            Add to Cart
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                @if($relatedCourses->count() > 4)
+                <button class="carousel-control-prev" type="button" data-bs-target="#relatedCoursesCarouselDesktop" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle p-3"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#relatedCoursesCarouselDesktop" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle p-3"></span>
+                </button>
+                @endif
+            </div>
+
+            {{-- MOBILE: 2 per slide --}}
+            <div id="relatedCoursesCarouselMobile" class="carousel slide d-block d-lg-none" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    @foreach($relatedCourses->chunk(2) as $index => $chunk)
+                        <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                            <div class="row g-4">
+                                @foreach($chunk as $course)
+                                    <div class="col-6">
+                                        <a href="{{ route('course-details', $course->slug) }}" class="text-decoration-none text-dark">
+                                            <div class="card border-0 shadow-sm related-course-card">
+
+                                                <img src="{{ asset('storage/'.$course->thumbnail) }}"
+                                                     class="card-img-top"
+                                                     style="aspect-ratio:16/9; object-fit:cover;">
+
+                                                <div class="card-body">
+                                                    <h6 class="fw-bold mb-2 line-clamp-2">{{ $course->title }}</h6>
+
+
+                                                    <p class="text-muted small mb-2 course-description">
+                                                        {{ $course->short_description ?? 'Learn the essentials of ' . $course->title . ' and advance your skills with professional training.' }}
+                                                    </p>
+
+                                                    <p class="extra-small text-muted mb-1">By {{ $course->instructor->name ?? 'Expert' }}</p>
+
+                                                    <div class="extra-small text-warning mb-2">
+                                                        <i class="bi bi-star-fill"></i> 4.9
+                                                        <span class="text-muted small">(1,250 reviews)</span>
+                                                    </div>
+
+                                                    <span class="fw-bold text-dark fs-5">₹{{ number_format($course->price, 0) }}</span>
+
+                                                    <form action="{{ route('add.to.cart', $course->id) }}" method="POST" class="mt-2">
+                                                        @csrf
+                                                        <button type="submit" 
+                                                                class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-none w-100 w-md-auto"
+                                                                onclick="event.stopPropagation();">
+                                                            Add to Cart
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+
+                @if($relatedCourses->count() > 2)
+                <button class="carousel-control-prev" type="button" data-bs-target="#relatedCoursesCarouselMobile" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon bg-dark rounded-circle p-2"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#relatedCoursesCarouselMobile" data-bs-slide="next">
+                    <span class="carousel-control-next-icon bg-dark rounded-circle p-2"></span>
+                </button>
+                @endif
+            </div>
+
+        </div>
+    </div>
+</section>
+@endif
+
         </div>
     </div>
 
@@ -452,5 +588,33 @@
         @keyframes shimmer-anim { 0% { background-position: -1000px 0; } 100% { background-position: 1000px 0; } }
         [wire\:loading] { display: none !important; } 
         [wire\:loading].shimmer-wrapper { display: flex !important; }
+
+        .related-course-card {
+            height: 380px; /* fixed height for all cards */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .related-course-card .card-body {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .line-clamp-2 {
+                display: -webkit-box;       /* required for WebKit */
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;      /* number of lines to show */
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+        .related-course-card .course-description {
+            flex: 1; /* takes remaining space */
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3; /* max 3 lines */
+            -webkit-box-orient: vertical;
+        }
     </style>
 </div>

@@ -106,13 +106,20 @@ class Categories extends Component
                 ->where('status', 2)
                 ->where('total_duration', '>', 600) // Changed from duration
                 ->count(),
-    ];
+        ];
+
+        $relatedCourses = Course::where('status', 2)
+            ->where('category_id', $this->category->id)
+            ->inRandomOrder()
+            ->take(8)
+            ->get();
 
         $courses = $query->latest()->paginate(6);
 
         return view('livewire.category-details', [
             'courses' => $courses,
             'mainCategory' => $mainCategory,
+            'relatedCourses' => $relatedCourses,
             'subCategories' => $subCategories,
             'levelCounts' => $levelCounts,
             'langCounts' => $langCounts,

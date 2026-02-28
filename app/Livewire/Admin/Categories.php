@@ -23,10 +23,6 @@ class Categories extends Component
         ];
     }
 
-    /**
-     * Computed properties allow you to access methods like public variables 
-     * in your Blade file using {{ $this->parent_name }}
-     */
     #[Computed]
     public function parent_name()
     {
@@ -86,7 +82,6 @@ class Categories extends Component
                 Category::find($this->editing_id)->update($data);
                 session()->flash('success', 'Category updated successfully!');
             } else {
-                // Ensure 'created_by' exists in your database table 'categories'
                 $data['created_by'] = Auth::guard('admin')->id();
                 Category::create($data);
                 session()->flash('success', 'New category deployed successfully!');
@@ -110,7 +105,7 @@ class Categories extends Component
     {
         return view('livewire.admin.categories', [
             'categories' => Category::with('children')
-                ->whereNull('parent_id') // Get main categories first
+                ->whereNull('parent_id') 
                 ->orderBy('order_priority', 'asc')
                 ->get(),
             'parentCategories' => Category::whereNull('parent_id')

@@ -78,27 +78,4 @@ class Course extends Model
     {
         return $query->where('status', 1);
     }
-    
-    // Accessor for status badge
-    public function getStatusColorAttribute()
-    {
-        return match($this->status) {
-            0 => 'secondary', // Draft
-            1 => 'warning',   // Pending
-            2 => 'success',   // Published
-            3 => 'danger',    // Rejected
-            default => 'dark',
-        };
-    }
-
-    public function getStatusLabelAttribute()
-    {
-        return match($this->status) {
-            0 => 'Draft',
-            1 => 'Review',
-            2 => 'Live',
-            3 => 'Rejected',
-            default => 'Unknown',
-        };
-    }
 }
