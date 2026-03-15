@@ -68,7 +68,7 @@
                                         <td class="ps-4 py-3">
                                             <div class="d-flex align-items-center">
                                                 <span class="text-muted small me-3">#{{ $banner->id }}</span>
-                                                <img src="{{ asset('Storage/' . $banner->image) }}" 
+                                                <img src="{{ asset('storage/' . $banner->image) }}" 
                                                      class="rounded-3 border object-fit-cover shadow-xs" 
                                                      width="100" height="50">
                                             </div>
@@ -128,7 +128,7 @@
                                         @if ($image)
                                             <img src="{{ $image->temporaryUrl() }}" class="img-fluid rounded-3 mb-3 shadow">
                                         @elseif ($old_image)
-                                            <img src="{{ asset('Storage/' . $old_image) }}" class="img-fluid rounded-3 mb-3 shadow">
+                                            <img src="{{ asset('storage/' . $old_image) }}" class="img-fluid rounded-3 mb-3 shadow">
                                         @endif
                                         <input type="file" wire:model="image" class="form-control form-control-sm mt-2">
                                         <p class="x-small text-muted mt-2">Max Size: 2MB | Suggested Ratio: 16:9</p>

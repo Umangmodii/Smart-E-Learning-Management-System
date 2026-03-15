@@ -149,7 +149,7 @@
     <div class="carousel-inner">
         @foreach($banners as $index => $banner)
             <div class="carousel-item {{ $index == 0 ? 'active' : '' }}" data-bs-interval="5000">
-                <div class="banner-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('{{ asset('Storage/' . $banner->image) }}');">
+                <div class="banner-bg" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.2)), url('{{ asset('storage/' . $banner->image) }}');">
                     <div class="container h-100 d-flex align-items-center">
                         <div class="text-white col-12 col-md-7 text-center text-md-start">
                             <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">
