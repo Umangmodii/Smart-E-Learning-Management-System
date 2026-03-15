@@ -9,8 +9,7 @@ use App\Models\User;
 
 class AccountSettings extends Component
 {
-      public $breadcrumbs = [];
-    // Constructor livewire loaded
+    public $breadcrumbs = [];
     public $email,$password,$password_confirmation;
     public function mount()
     {
@@ -21,13 +20,11 @@ class AccountSettings extends Component
         
         $this->email = auth()->user()->email;
     }
-
     public function render()
     {
         return view('livewire.account-settings')
             ->layout('layouts.app', ['title' => 'Account Settings']);
     }
-
     public function updateAccount()
     {
         $this->validate([
@@ -43,6 +40,5 @@ class AccountSettings extends Component
 
         $this->reset(['password', 'password_confirmation']);
         session()->flash('success', 'Security updated successfully!');
-
     }
 }

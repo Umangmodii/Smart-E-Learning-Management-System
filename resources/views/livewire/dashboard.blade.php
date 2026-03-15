@@ -27,25 +27,56 @@
             </p>
         </div>
             <ul class="nav flex-column pt-2">
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('dashboard') ? 'active fw-bold' : 'text-dark' }}" 
-                href="{{ url('/dashboard') }}" 
-                wire:navigate>
-                View profile details
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link {{ request()->is('account-settings') ? 'active fw-bold' : 'text-dark' }}" 
-                href="{{ url('/account-settings') }}" 
-                >
-                Security Setting
-                </a>
-            </li>
-            <li class="nav-item border-top mt-3">
-                <a class="nav-link text-danger" href="{{ url('/logout') }}">
-                    Logout
-                </a>
-            </li>
+                <ul class="nav flex-column p-3">
+
+                    <!-- Profile -->
+                     <li class="nav-item">
+                    <a class="nav-link {{ request()->is('dashboard') ? 'active fw-bold' : '' }} py-3" 
+                    href="{{ url('/dashboard') }}" wire:navigate>
+                        <i class="bi bi-person-circle me-2"></i> Profile Details
+                    </a>
+                </li>
+
+                <!-- Security Settings -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('account-settings') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/account-settings') }}" wire:navigate>
+                        <i class="bi bi-shield-lock me-2"></i> Security Settings
+                    </a>
+                </li>
+
+                <!-- Enrolled Courses -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('enrolled-courses') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/enrolled-courses') }}" wire:navigate>
+                        <i class="bi bi-journal-bookmark me-2"></i> Enrolled Courses
+                    </a>
+                </li>
+
+                <!-- Course Reviews -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('course-reviews') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/course-reviews') }}" wire:navigate>
+                        <i class="bi bi-star-half me-2"></i> Course Reviews
+                    </a>
+                </li>
+
+                <!-- Order History -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('order-history') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/order-history') }}" wire:navigate>
+                        <i class="bi bi-receipt me-2"></i> Order History
+                    </a>
+                </li>
+
+                <!-- Logout -->
+                <li class="nav-item border-top mt-3 pt-2">
+                    <a class="nav-link text-danger py-3" href="#" wire:navigate>
+                        <i class="bi bi-box-arrow-right me-2"></i> Logout
+                    </a>
+                </li>
+
+                </ul>
         </ul>
     </div>
 
@@ -69,20 +100,55 @@
                 <p class="small text-muted">{{ auth()->user()->profile->bio ?? 'No bio added yet.' }}</p>
             </div>
             
-           <ul class="nav flex-column p-3">
+          <ul class="nav flex-column p-3">
+    
+                <!-- Profile -->
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('dashboard') ? 'active fw-bold' : '' }} py-3" href="{{ url('/dashboard') }}" wire:navigate>
-                        <i class="bi bi-person-circle me-2"></i> Profile details
+                    <a class="nav-link {{ request()->is('dashboard') ? 'active fw-bold' : '' }} py-3" 
+                    href="{{ url('/dashboard') }}" wire:navigate>
+                        <i class="bi bi-person-circle me-2"></i> Profile Details
                     </a>
                 </li>
+
+                <!-- Security Settings -->
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('account-settings') ? 'active fw-bold' : '' }} py-3 text-dark" href="{{ url('/account-settings') }}" wire:navigate>
-                        <i class="bi bi-shield-lock me-2"></i> Security Setting
+                    <a class="nav-link {{ request()->is('account-settings') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/account-settings') }}" wire:navigate>
+                        <i class="bi bi-shield-lock me-2"></i> Security Settings
                     </a>
                 </li>
+
+                <!-- Enrolled Courses -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('enrolled-courses') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/enrolled-courses') }}" wire:navigate>
+                        <i class="bi bi-journal-bookmark me-2"></i> Enrolled Courses
+                    </a>
+                </li>
+
+                <!-- Course Reviews -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('course-reviews') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/course-reviews') }}" wire:navigate>
+                        <i class="bi bi-star-half me-2"></i> Course Reviews
+                    </a>
+                </li>
+
+                <!-- Order History -->
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('order-history') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/order-history') }}" wire:navigate>
+                        <i class="bi bi-receipt me-2"></i> Order History
+                    </a>
+                </li>
+
+                <!-- Logout -->
                 <li class="nav-item border-top mt-3 pt-2">
-                    <a class="nav-link text-danger py-3" href="#"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+                    <a class="nav-link text-danger py-3" href="#" wire:navigate>
+                        <i class="bi bi-box-arrow-right me-2"></i> Logout
+                    </a>
                 </li>
+
             </ul>
         </div>
     </div>
@@ -94,7 +160,17 @@
         </div>
 
         <div class="container-fluid p-0">
+            
             <div class="row justify-content-center m-0"> <div class="col-12 col-xl-10"> 
+
+                <div class="mt-3">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success">{{ session('success') }}</div>
+                            @elseif (session()->has('error'))
+                        <div class="alert alert-danger">{{ session('error') }}</div>
+                    @endif
+                </div>
+                
                     <form wire:submit.prevent="updateProfile"> 
                         <div class="card shadow-sm border-0 rounded-3">
                             <div class="card-body p-4">
@@ -103,6 +179,7 @@
                                         <img src="{{ $avatar ? asset('storage/' . $avatar) : 'https://ui-avatars.com/api/?name='. urlencode(auth()->user()->name) }}" 
                                              class="rounded-circle border shadow-sm" width="90" height="90">
                                     </div>
+                                    
                                     <div class="col-12 col-md">
                                         <h4 class="fw-bold mb-1">{{ auth()->user()->name }}</h4>
                                         <p class="text-muted mb-2">{{ auth()->user()->email }}</p>
@@ -114,7 +191,6 @@
                                 </div>
 
                                 <hr class="mb-4">
-
                                 <div class="row g-4">
                                     <div class="col-12">
                                         <label class="form-label text-muted small fw-bold">About Me (Bio)</label>
@@ -163,13 +239,6 @@
                                         <span wire:loading>Saving...</span>
                                     </button>
 
-                                    <div class="mt-3">
-                                        @if (session()->has('success'))
-                                            <div class="alert alert-success">{{ session('success') }}</div>
-                                        @elseif (session()->has('error'))
-                                            <div class="alert alert-danger">{{ session('error') }}</div>
-                                        @endif
-                                    </div>
                                 </div>
                             </div>
                         </div>

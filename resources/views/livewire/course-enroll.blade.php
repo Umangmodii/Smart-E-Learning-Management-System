@@ -142,58 +142,9 @@
 
         <div class="flex-grow-1 p-3 p-md-4">
             <div class="text-center mb-4">
-                <h2 class="fw-bold">Account Settings</h2>
-                <p class="text-muted">Edit your account settings and change your password here.</p>
+                <h2 class="fw-bold">Course Enrollements</h2>
             </div>
 
-            <div class="container-fluid p-0">
-                <div class="row justify-content-center m-0">
-                    <div class="col-12 col-xl-8">
-                        <form wire:submit.prevent="updateAccount">
-                            <div class="card shadow-sm border-0 rounded-4">
-                                <div class="card-body p-4 p-md-5">
-                                    
-                                    <div class="mb-4">
-                                        <label class="form-label fw-bold text-muted small uppercase">Email Address</label>
-                                        <input type="email" wire:model="email" class="form-control bg-light border-0 py-2">
-                                        <div class="form-text">Your email address is <strong>{{ auth()->user()->email }}</strong></div>
-                                        @error('email') <span class="text-danger small">{{ $message }}</span> @enderror
-                                    </div>
-
-                                    <hr class="my-4 opacity-25">
-
-                                    <div class="row g-4">
-                                        <div class="col-md-6">
-                                            <label class="form-label fw-bold text-muted small uppercase">New Password</label>
-                                            <input type="password" wire:model="password" class="form-control bg-light border-0 py-2" placeholder="••••••••">
-                                            @error('password') <span class="text-danger small">{{ $message }}</span> @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label fw-bold text-muted small uppercase">Confirm Password</label>
-                                            <input type="password" wire:model="password_confirmation" class="form-control bg-light border-0 py-2" placeholder="••••••••">
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-5 pt-3 border-top">
-                                        <button type="submit" class="btn btn-primary px-5 fw-bold rounded-pill shadow-sm" wire:loading.attr="disabled">
-                                            <span wire:loading.remove wire:target="updateAccount">Update Account</span>
-                                            <span wire:loading wire:target="updateAccount">
-                                                <span class="spinner-border spinner-border-sm me-2"></span>Processing...
-                                            </span>
-                                        </button>
-                                    </div>
-
-                                    @if (session()->has('success'))
-                                        <div class="alert alert-success mt-3 border-0 rounded-3">
-                                            <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

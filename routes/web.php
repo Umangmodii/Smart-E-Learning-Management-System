@@ -34,6 +34,8 @@ use App\Livewire\Pages\Contact;
 use App\Livewire\CourseDetails as CoursesDetails;
 use App\Http\Controllers\Frontend\AddToCartController;
 use App\Livewire\Cart;
+use App\Livewire\Instructor\CourseFaqs;
+use App\Livewire\Instructor\CourseReviews;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -159,6 +161,12 @@ Route::middleware(['auth:instructor'])->prefix('instructor')->name('instructor.'
 
         // For Course
         Route::get('/courses',CoursesController::class)->name('courses');
+
+        // For Course FAQs
+        Route::get('/course-faqs', CourseFaqs::class)->name('course-faqs');
+
+        // For Course Reviews
+        Route::get('/courses/reviews', CourseReviews::class)->name('course-reviews');
     });
 
     Route::get('/pending-approval', function () {

@@ -76,33 +76,40 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('admin/courses/reviews') }}" class="py-2 {{ request()->is('admin/courses/reviews*') ? 'active-child' : '' }}">
+                    <a href="{{ url('instructor/courses/reviews') }}" class="py-2 {{ request()->is('instructor/courses/reviews*') ? 'active-child' : '' }}">
                         <i class="bi bi-star-fill me-2"></i> Reviews
                     </a>
                 </li>
             </ul>
         </li>
 
-        <li>
-            <a href="{{ url('admin/revenue') }}" 
-               class="d-flex align-items-center {{ request()->is('admin/revenue*') ? 'active' : '' }}">
-                <i class="bi bi-wallet2 me-2"></i> <span>Platform Revenue</span>
-            </a>
-        </li>
+            <li>
+                <a href="{{ url('instructor/course-faqs') }}" 
+                class="d-flex align-items-center {{ request()->is('instructor/course-faqs*') ? 'active' : '' }}">
+                    <i class="bi bi-question-circle-fill me-2"></i> <span>Manage FAQ</span>
+                </a>
+            </li>
 
-        <li>
-            <a href="{{ url('admin/settings') }}" 
-               class="d-flex align-items-center {{ request()->is('admin/settings*') ? 'active' : '' }}">
-                <i class="bi bi-sliders me-2"></i> <span>Global Settings</span>
-            </a>
-        </li>
+            <li>
+                <a href="{{ url('admin/revenue') }}" 
+                class="d-flex align-items-center {{ request()->is('admin/revenue*') ? 'active' : '' }}">
+                    <i class="bi bi-wallet2 me-2"></i> <span>Platform Revenue</span>
+                </a>
+            </li>
 
-        <li id="noMenuResult" class="text-center py-4" style="display: none;">
-            <i class="bi bi-search text-muted d-block fs-4 mb-2"></i>
-            <small class="text-muted">No matches found</small>
-        </li>
-    </ul>
-  </nav>
+            <li>
+                <a href="{{ url('admin/settings') }}" 
+                class="d-flex align-items-center {{ request()->is('admin/settings*') ? 'active' : '' }}">
+                    <i class="bi bi-sliders me-2"></i> <span>Global Settings</span>
+                </a>
+            </li>
+
+            <li id="noMenuResult" class="text-center py-4" style="display: none;">
+                <i class="bi bi-search text-muted d-block fs-4 mb-2"></i>
+                <small class="text-muted">No matches found</small>
+            </li>
+        </ul>
+    </nav>
 
         <div id="content">
             <nav class="main-header d-flex justify-content-between align-items-center shadow-sm px-3 py-2 bg-white sticky-top">

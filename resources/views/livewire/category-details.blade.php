@@ -351,8 +351,8 @@
                         </p>
                         <p class="extra-small text-muted mb-1">By {{ $course->instructor->name ?? 'Expert' }}</p>
                         <div class="extra-small text-warning mb-2">
-                            <i class="bi bi-star-fill"></i> 4.9 
-                            <span class="text-muted small">(1,250 reviews)</span>
+                            <i class="bi bi-star-fill"></i> {{ number_format($course->reviews->avg('rating'), 1) }}
+                            <span class="text-muted small">({{ $course->reviews->count() }} reviews) </span>
                         </div>
 
                         {{-- PRICE --}}
@@ -446,10 +446,10 @@
 
                                                     <p class="extra-small text-muted mb-1">By {{ $course->instructor->name ?? 'Expert' }}</p>
 
-                                                    <div class="extra-small text-warning mb-2">
-                                                        <i class="bi bi-star-fill"></i> 4.9
-                                                        <span class="text-muted small">(1,250 reviews)</span>
-                                                    </div>
+                                                     <div class="extra-small text-warning mb-2">
+                                                            <i class="bi bi-star-fill"></i> {{ number_format($course->reviews->avg('rating'), 1) }}
+                                                            <span class="text-muted small">({{ $course->reviews->count() }} reviews) </span>
+                                                      </div>
 
                                                     <span class="fw-bold text-dark fs-5">₹{{ number_format($course->price, 0) }}</span>
 
@@ -462,7 +462,6 @@
                                                         </button>
                                                     </form>
                                                 </div>
-
                                             </div>
                                         </a>
                                     </div>

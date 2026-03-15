@@ -10,7 +10,6 @@ use App\Models\AdminCategory;
 class Course extends Model
 {
     use HasFactory;
-
     protected $fillable = [
        'category_id',
         'user_id',
@@ -32,7 +31,7 @@ class Course extends Model
         'level',
         'language',
         'meta_keywords',
-        'video_promo_path',
+        'video_promo_path',~
         'total_duration',
         'is_published',
     ];
@@ -77,5 +76,17 @@ class Course extends Model
     public function scopePending($query)
     {
         return $query->where('status', 1);
+    }
+
+    // Course has many sections
+    public function sections()
+    {
+        return $this->hasMany(CourseSection::class)->orderBy('order', 'asc');
+    }
+
+    // Course has many reviews
+    public function reviews()
+    {
+        return $this->hasMany(CourseReview::class);
     }
 }

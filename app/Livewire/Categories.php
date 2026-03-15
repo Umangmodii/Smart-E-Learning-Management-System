@@ -6,7 +6,8 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\AdminCategory;
 use App\Models\Course;
-
+use App\Models\CourseReview;
+use Illuminate\Support\Facades\Cache;
 class Categories extends Component
 {
     use WithPagination;
@@ -45,6 +46,14 @@ class Categories extends Component
     {
         $this->reset(['selectedSubCategories', 'selectedLevels', 'selectedLanguages', 'selectedDuration', 'selectedPrice']);
         $this->resetPage();
+    }
+
+    public function CourseReview()
+    {
+        $this->reviews = CourseReview::where('course_id',$this->course->id)
+            ->where('status',1)
+            ->latest()
+            ->get();
     }
     public function setView($type) { $this->viewType = $type; }
     public function render()

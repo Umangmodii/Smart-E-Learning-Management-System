@@ -245,14 +245,12 @@
 
                         <div class="d-flex align-items-start mb-3">
 
-                            {{-- Course Thumbnail --}}
                             <a href="{{ route('course-details', ['course_slug' => $item['slug']]) }}" class="me-2">
                                 <img src="{{ $item['image'] ? asset('storage/'.$item['image']) : 'https://placehold.co/50' }}"
                                     width="50"
                                     class="rounded">
                             </a>
 
-                                {{-- Title & Price --}}
                                 <div class="flex-grow-1">
                                     <a href="{{ route('course-details', ['course_slug' => $item['slug']]) }}" class="text-decoration-none text-dark">
                                         <h6 class="mb-1 fw-bold" style="
@@ -268,7 +266,6 @@
                                     <small class="fw-bold text-primary">₹{{ number_format($item['price'], 0) }}</small>
                                 </div>
 
-                                {{-- Remove Button --}}
                                 <a href="{{ route('remove.cart', $item['id']) }}" 
                                 class="text-primary ms-2 btn p-0"
                                 style="font-size: 1.2rem; line-height: 1;">
@@ -279,7 +276,6 @@
 
                             <hr>
 
-                            {{-- Total & Count --}}
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <strong>Total ({{ count($cart) }} items):</strong>
                                 <strong>₹{{ number_format($totalPrice, 0) }}</strong>
@@ -306,24 +302,26 @@
                         </a>
                     </li>
                 @else
-                    <li class="nav-item dropdown ms-lg-2">
-                        <a class="nav-link dropdown-toggle p-0"
-                           data-bs-toggle="dropdown">
-                            <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}"
-                                 class="rounded-circle"
-                                 width="38"
-                                 height="38">
-                        </a>
+                    <li class="nav-item dropdown ms-lg-3">
+                        <a class="nav-link dropdown-toggle p-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}" class="rounded-circle" width="38" height="38"> </a>
 
-                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-4 p-2">
-                            <li><a class="dropdown-item small" href="#">Dashboard</a></li>
-                            <li><a class="dropdown-item small" href="#">My Courses</a></li>
-                            <li><hr></li>
+                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 py-2" style="min-width: 200px;">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('dashboard') }}">
+                                    <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <i class="bi bi-journal-bookmark me-2"></i> My Courses
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
                             <li>
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <button class="dropdown-item text-danger small border-0 bg-transparent">
-                                        Logout
+                                    <button class="dropdown-item d-flex align-items-center text-danger border-0 bg-transparent">
+                                        <i class="bi bi-box-arrow-right me-2"></i> Logout
                                     </button>
                                 </form>
                             </li>

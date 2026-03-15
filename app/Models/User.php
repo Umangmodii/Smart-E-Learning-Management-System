@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
         return $this->role?->name === 'student';
     }
+    // Course Reviews by User
+    public function reviews()
+    {
+        return $this->hasMany(CourseReview::class); 
+    }
 }

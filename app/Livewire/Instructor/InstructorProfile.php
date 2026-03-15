@@ -15,7 +15,6 @@ class InstructorProfile extends Component
     public $avatar, $headline, $bio, $website, $facebook_url, $instagram_url, $linkedin_url, $youtube_url;
     public $current_avatar; 
     public $breadcrumbs = [];
-
     public function mount()
     {
         $this->breadcrumbs = [
@@ -30,7 +29,6 @@ class InstructorProfile extends Component
             $this->current_avatar = $details->avatar; 
         }   
     }
-
     public function instructor_profile()
     {
         try {
@@ -76,7 +74,6 @@ class InstructorProfile extends Component
             session()->flash('error', 'Database Error: ' . $e->getMessage());
         }   
     }
-
     public function render()
     {
         return view('livewire.instructor.profile')

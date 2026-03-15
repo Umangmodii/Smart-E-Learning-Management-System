@@ -9,10 +9,8 @@ class LoginUser extends Component
     public $email;
     public $password;
     public $breadcrumbs = [];
-    // Constructor livewire loaded
     public function mount()
     {
-        // Define your breadcrumbs here dynamically
         $this->breadcrumbs = [
             ['label' => 'Home', 'url' => url('/')],
             ['label' => 'Instructor Login', 'url' => null],
@@ -31,7 +29,6 @@ class LoginUser extends Component
             'password' => 'required',
         ]);
 
-        // Use the 'instructor' guard from your config/auth.php
         if (auth('instructor')->attempt(['email' => $this->email, 'password' => $this->password])) {
             
             $instructor = auth('instructor')->user();
@@ -42,10 +39,8 @@ class LoginUser extends Component
                 return session()->flash('error', 'Your account is still pending approval.');
             }
 
-            // Industrial Redirect
             return redirect()->intended(route('instructor.dashboard'));
         }
-
         return session()->flash('error', 'Invalid credentials.');
     }
 }

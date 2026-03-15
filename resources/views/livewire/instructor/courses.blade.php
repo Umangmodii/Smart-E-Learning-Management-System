@@ -191,15 +191,123 @@
                                             <textarea wire:model="short_description" class="form-control border-2 shadow-none" rows="2" placeholder="Briefly describe the course..."></textarea>
                                         </div>
 
-                                        <div class="mb-4">
-                                            <label class="form-label fw-bold text-dark small text-uppercase tracking-wider">Full Description</label>
-                                            <textarea wire:model="description" class="form-control border-2 shadow-none" rows="6" placeholder="Detailed curriculum breakdown..."></textarea>
-                                        </div>
+                                      <div class="mb-4">
+                                        <label class="form-label fw-bold text-dark small text-uppercase tracking-wider">
+                                            Full Description
+                                        </label>
+                                        <textarea id="description" wire:model.defer="description" class="form-control border-2 shadow-none" rows="6"></textarea>
+                                    </div>
 
                                         {{-- SEO --}}
                                         <div class="mb-5">
                                             <label class="form-label fw-bold text-dark small text-uppercase tracking-wider">SEO Keywords (Meta)</label>
                                             <textarea wire:model="meta_keywords" class="form-control border-2 shadow-none" rows="2" placeholder="laravel, php, backend, coding..."></textarea>
+                                        </div>
+
+                                        <hr class="my-5">
+
+                                            <div class="mb-5">
+
+                                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                                    <h5 class="fw-bold text-dark">Course Curriculum</h5>
+                                                    <button type="button"
+                                                            wire:click="addSection"
+                                                            class="btn btn-sm btn-outline-primary rounded-pill">
+                                                        <i class="bi bi-plus-lg me-1"></i> Add Section
+                                                    </button>
+                                                </div>
+
+                                                @forelse($sections as $sectionIndex => $section)
+
+                                                    <div class="card mb-3 shadow-sm border rounded-3">
+
+                                                        {{-- SECTION HEADER --}}
+                                                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+
+                                                            <input type="text"
+                                                                wire:model="sections.{{ $sectionIndex }}.title"
+                                                                class="form-control form-control-sm w-75 fw-medium"
+                                                                placeholder="Section Title">
+
+                                                            <div class="d-flex gap-2">
+                                                                <button type="button"
+                                                                        wire:click="addLecture({{ $sectionIndex }})"
+                                                                        class="btn btn-sm btn-outline-success">
+                                                                    <i class="bi bi-plus-circle"></i>
+                                                                </button>
+
+                                                                <button type="button"
+                                                                        wire:click="removeSection({{ $sectionIndex }})"
+                                                                        class="btn btn-sm btn-outline-danger">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </div>
+
+                                                        </div>
+
+                                                    {{-- LECTURES --}}
+                                                    <div class="card-body">
+
+                                                        @foreach($section['lectures'] as $lectureIndex => $lecture)
+
+                                                            <div class="row g-2 align-items-center mb-2">
+
+                                                                <div class="col-md-4">
+                                                                    <input type="text"
+                                                                        wire:model="sections.{{ $sectionIndex }}.lectures.{{ $lectureIndex }}.title"
+                                                                        class="form-control form-control-sm"
+                                                                        placeholder="Lecture Title">
+                                                                </div>
+
+                                                                <div class="col-md-3">
+                                                                    <input type="text"
+                                                                        wire:model="sections.{{ $sectionIndex }}.lectures.{{ $lectureIndex }}.video_path"
+                                                                        class="form-control form-control-sm"
+                                                                        placeholder="Video URL">
+                                                                </div>
+
+                                                                <div class="col-md-2">
+                                                                    <input type="number"
+                                                                        wire:model="sections.{{ $sectionIndex }}.lectures.{{ $lectureIndex }}.duration"
+                                                                        class="form-control form-control-sm"
+                                                                        placeholder="Duration (sec)">
+                                                                </div>
+
+                                                                <div class="col-md-2">
+                                                                    <div class="form-check">
+                                                                        <input type="checkbox"
+                                                                            wire:model="sections.{{ $sectionIndex }}.lectures.{{ $lectureIndex }}.is_preview"
+                                                                            class="form-check-input">
+                                                                        <label class="form-check-label small">
+                                                                            Preview
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-md-1 text-end">
+                                                                    <button type="button"
+                                                                            wire:click="removeLecture({{ $sectionIndex }}, {{ $lectureIndex }})"
+                                                                            class="btn btn-sm btn-outline-danger">
+                                                                        <i class="bi bi-x"></i>
+                                                                    </button>
+                                                                </div>
+
+                                                            </div>
+
+                                                        @endforeach
+
+                                                    </div>
+                                                </div>
+
+                                            @empty
+
+                                                <div class="text-center py-4 border rounded-3 bg-light">
+                                                    <i class="bi bi-journal-plus display-6 text-muted mb-2"></i>
+                                                    <p class="text-muted mb-0">No sections added yet.</p>
+                                                </div>
+
+                                            @endforelse
+
                                         </div>
 
                                         <div class="d-flex flex-column flex-sm-row gap-3 pt-4 border-top">

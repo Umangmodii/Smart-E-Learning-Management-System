@@ -22,5 +22,5 @@ class AdminMiddleware
             'status' => false,
             'message' => 'Access Denied: Admin privileges required.'
         ], 403);
-        }
+    }
 }

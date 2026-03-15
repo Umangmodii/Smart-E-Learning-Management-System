@@ -40,14 +40,14 @@
                             
                             <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
                                 <span class="badge bg-warning text-dark fw-bold small" style="background-color: #eceb98 !important;">Bestseller</span>
-                                <span class="fw-bold text-warning small">4.6</span>
+                                <span class="fw-bold text-warning small">{{ $item['avg_rating'] }}</span>
                                 <div class="text-warning small" style="font-size: 0.7rem;">
                                     <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
                                 </div>
-                                <span class="text-muted small">(12,788 ratings)</span>
+                                <span class="text-muted small">({{ $item['review_count'] }} ratings)</span>
                             </div>
 
-                            <p class="text-muted extra-small mb-2">29.5 total hours • 442 lectures • All Levels</p>
+                            <p class="text-muted extra-small mb-2">{{ $item['total_duration'] }} total hours • {{ $item['lecture_count'] }} lectures • All Levels</p>
 
                             <div class="d-flex gap-3">
                                 <button wire:click="removeFromCart({{ $id }})" class="btn btn-link text-primary p-0 text-decoration-none small fw-bold">Remove</button>
@@ -105,11 +105,11 @@
                                 <h6 class="fw-bold mb-1 line-clamp-2" style="font-size: 0.9rem; min-height: 2.4rem;">{{ $course->title }}</h6>
                                 <p class="text-muted extra-small mb-1">{{ $course->instructor->name ?? 'Expert' }}</p>
                                 <div class="d-flex align-items-center gap-1 mb-1">
-                                    <span class="text-warning fw-bold extra-small">4.7</span>
+                                    <span class="text-warning fw-bold extra-small"> {{ $item['avg_rating'] }}  </span>
                                     <div class="text-warning extra-small" style="font-size: 0.6rem;">
                                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
                                     </div>
-                                    <span class="text-muted extra-small">({{ number_format(rand(1000, 5000)) }})</span>
+                                    <span class="text-muted extra-small">({{ $item['review_count'] }})</span>
                                 </div>
                                 <h6 class="fw-bold mb-2">₹{{ number_format($course->discount_price > 0 ? $course->discount_price : $course->price, 0) }}</h6>
                                 <div class="d-flex gap-1">

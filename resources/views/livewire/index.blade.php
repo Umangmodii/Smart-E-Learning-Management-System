@@ -263,7 +263,20 @@
 
                                             {{-- Metadata: Duration & Language --}}
                                             <div class="d-flex gap-3 text-muted extra-small mb-3">
-                                                <span><i class="bi bi-clock me-1"></i>{{ gmdate("H:i", $course->total_duration) }}</span>
+                                                    
+                                                @php
+                                                    $totalMinutes = $course->sections->flatMap->lectures->sum('duration');
+
+                                                        $hours = floor($totalMinutes / 60);
+                                                        $minutes = $totalMinutes % 60;
+                                                @endphp
+
+                                                <span class="text-muted small">
+                                                    {{ $hours }}h {{ $minutes }}m total length
+                                                </span>
+
+                                                    {{-- <div>{{ gmdate("H:i", $course->total_duration) }}</div> --}}
+
                                                 <span><i class="bi bi-globe me-1"></i>{{ $course->language ?? 'English' }}</span>
                                             </div>
 
@@ -279,16 +292,22 @@
                                                         <span class="fw-bold text-success fs-5">FREE</span>
                                                     @endif
                                                 </div>
-                                                 <form action="{{ route('add.to.cart', $course->id) }}"
-                                                    method="POST"
-                                                    style="z-index: 2; position: relative;">
-                                                    @csrf
-                                                    <button type="submit"
-                                                        class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-none"
-                                                        onclick="event.stopPropagation();">
-                                                        Add to Cart
-                                                    </button>
-                                                </form>
+                                                @if($course->price > 0)
+                                                   <form action="{{ route('add.to.cart', $course->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-sm rounded-pill px-3 fw-bold"
+                                                            onclick="event.stopPropagation();">
+                                                            Add to Cart
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                   <a href=""
+                                                    class="btn btn-primary btn-sm rounded-pill px-3 fw-bold">
+                                                        Enroll Now
+                                                    </a>
+
+                                                @endif
 
                                             </div>
                                         </div>

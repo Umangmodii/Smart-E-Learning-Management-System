@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\Instructor\InstructorProfile;
 use App\Http\Controllers\Api\Admin\CategoryApiController;
 use App\Http\Controllers\Api\Admin\BannerApiController;
 use App\Http\Controllers\Api\Admin\CourseDetails;
+use App\Http\Controllers\Api\Instructor\CourseFaqController;
+use App\Http\Controllers\Api\Instructor\CourseReviewsController;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -59,6 +61,8 @@ Route::prefix('instructor')->group(function () {
     Route::post('/register', [InstructorAuthController::class, 'register']);
     Route::post('/login', action: [InstructorAuthController::class, 'login']);
     Route::get('/instructor-profile/{instructor_id}', [InstructorProfile::class, 'getinstructorprofile']);
+    Route::get('/courses/{courseId}/faqs', [CourseFaqController::class, 'getCourseFaqs']);
+    Route::get('/courses/{courseId}/reviews', [CourseReviewsController::class, 'getCourseReviews']);
 });
 
 // Route::middleware(middleware: ['auth:instructor_api'])->prefix('instructor')->group(function () {

@@ -236,7 +236,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <style>
     .x-small { font-size: 0.7rem; }
@@ -248,3 +247,5 @@
     .table thead th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; color: #6c757d; }
     .timeline { position: relative; }
 </style>
+
+</div>
