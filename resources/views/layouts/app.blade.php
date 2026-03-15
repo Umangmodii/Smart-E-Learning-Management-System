@@ -16,7 +16,7 @@
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
 
-    <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" type="image/png">
+    <link rel="icon" href="{{ asset('images/Smartlms_logos.png') }}" type="image/png">
     <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
 
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
