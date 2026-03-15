@@ -16,7 +16,7 @@
               position-absolute start-50 translate-middle-x"
        href="{{ url('/') }}">
 
-        <img src="{{ asset('images/smartlms_logo.png') }}"
+        <img src="{{ asset('images/Smartlms_logos.png') }}"
              height="30"
              class="me-2">
 
