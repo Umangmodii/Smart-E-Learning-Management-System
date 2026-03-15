@@ -12,7 +12,7 @@
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="{{ url()->current() }}">
     <meta property="og:title" content="{{ $title ?? 'Smart E-Learning' }}">
-    <meta property="og:image" content="{{ asset('images/smartlms_logo.png') }}">
+    <meta property="og:image" content="{{ asset('images/Smartlms_logos.png') }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:type" content="website">
 
