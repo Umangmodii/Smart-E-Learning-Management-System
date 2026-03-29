@@ -601,13 +601,25 @@
                                 </div>
 
                             {{-- Enroll Button --}}
-                                <form action="{{ route('add.to.cart', $course->id) }}" method="POST" class="mt-2">
-                                        @csrf
-                                        <button type="submit" 
-                                                class="btn btn-primary w-100 fw-bold active text-white">
-                                            Add to Cart
-                                        </button>
-                                </form>
+                             @if($course->price > 0)
+                                                   <form action="{{ route('add.to.cart', $course->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="btn btn-primary btn-sm rounded-pill px-3 fw-bold"
+                                                            onclick="event.stopPropagation();">
+                                                            Add to Cart
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                <form action="{{ route('course.enroll', $course->id) }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                   <button 
+                                                        wire:click="enroll({{ $course->id }})"
+                                                        class="btn btn-success btn-sm rounded-pill px-3 fw-bold"
+                                                        onclick="event.stopPropagation();">
+                                                        Enroll Now
+                                                    </button>
+                            @endif
 
                             {{-- <button class="btn btn-outline-secondary w-100">
                                 Add to Wishlist

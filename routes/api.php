@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\Admin\BannerApiController;
 use App\Http\Controllers\Api\Admin\CourseDetails;
 use App\Http\Controllers\Api\Instructor\CourseFaqController;
 use App\Http\Controllers\Api\Instructor\CourseReviewsController;
+use App\Http\Controllers\Api\Instructor\EnrollCourseController;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -49,6 +50,7 @@ Route::middleware(['auth:admin_api', 'isAdmin'])->group(function () {
       Route::get('/banners-list', [BannerApiController::class, 'fetch_banner']);
       Route::post('/banners', [BannerApiController::class, 'store']);
       Route::get('/courses-details',[CourseDetails::class,'index']);
+      Route::get('/enrollments', [EnrollCourseController::class, 'getEnrolledCourses']);
 });
 
 // ----------------------------  Instructor ---------------------------------------------

@@ -140,60 +140,73 @@
         </div>
     </div>
 
-        <div class="flex-grow-1 p-3 p-md-4">
+         <div class="flex-grow-1 p-3 p-md-4">
             <div class="text-center mb-4">
-                <h2 class="fw-bold">Account Settings</h2>
-                <p class="text-muted">Edit your account settings and change your password here.</p>
+                <h2 class="fw-bold">Course Reviews</h2>
             </div>
+            <hr>
 
-            <div class="container-fluid p-0">
-                <div class="row justify-content-center m-0">
-                    <div class="col-12 col-xl-8">
-                        <form wire:submit.prevent="updateAccount">
-                            <div class="card shadow-sm border-0 rounded-4">
-                                <div class="card-body p-4 p-md-5">
-                                    
-                                    <div class="mb-4">
-                                        <label class="form-label fw-bold text-muted small uppercase">Email Address</label>
-                                        <input type="email" wire:model="email" class="form-control bg-light border-0 py-2">
-                                        <div class="form-text">Your email address is <strong>{{ auth()->user()->email }}</strong></div>
-                                        @error('email') <span class="text-danger small">{{ $message }}</span> @enderror
-                                    </div>
-
-                                    <hr class="my-4 opacity-25">
-
-                                    <div class="row g-4">
-                                        <div class="col-md-6">
-                                            <label class="form-label fw-bold text-muted small uppercase">New Password</label>
-                                            <input type="password" wire:model="password" class="form-control bg-light border-0 py-2" placeholder="••••••••">
-                                            @error('password') <span class="text-danger small">{{ $message }}</span> @enderror
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="form-label fw-bold text-muted small uppercase">Confirm Password</label>
-                                            <input type="password" wire:model="password_confirmation" class="form-control bg-light border-0 py-2" placeholder="••••••••">
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-5 pt-3 border-top">
-                                        <button type="submit" class="btn btn-primary px-5 fw-bold rounded-pill shadow-sm" wire:loading.attr="disabled">
-                                            <span wire:loading.remove wire:target="updateAccount">Update Account</span>
-                                            <span wire:loading wire:target="updateAccount">
-                                                <span class="spinner-border spinner-border-sm me-2"></span>Processing...
-                                            </span>
-                                        </button>
-                                    </div>
-
-                                    @if (session()->has('success'))
-                                        <div class="alert alert-success mt-3 border-0 rounded-3">
-                                            <i class="bi bi-check-circle me-2"></i> {{ session('success') }}
-                                        </div>
-                                    @endif
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
                 </div>
+            @endif
+
+            <div class="row g-4">
+                @forelse($reviews as $review)
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card shadow-sm h-100 border-0 rounded-4">
+
+                            <img src="{{ asset('storage/'.$review['course']['thumbnail']) }}"
+                                class="card-img-top"
+                                style="height:180px; object-fit:cover;"
+                                alt="Course Image">
+
+                            <div class="card-body d-flex flex-column">
+
+                                <h6 class="fw-bold mb-1 text-truncate">
+                                    {{ $review['course']['title'] }}
+                                </h6>
+
+                                <p class="text-muted small mb-2">
+                                    {{ Str::limit($review['course']['short_description'], 60) }}
+                                </p>
+
+                                <div class="mb-2">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= $review['rating'])
+                                            <i class="bi bi-star-fill text-warning"></i>
+                                        @else
+                                            <i class="bi bi-star text-warning"></i>
+                                        @endif
+                                    @endfor
+
+                                    <span class="small text-muted ms-1">
+                                        ({{ $review['rating'] }}/5)
+                                    </span>
+                                </div>
+
+                                <p class="small text-dark mb-3">
+                                    "{{ Str::limit($review['review'], 100) }}"
+                                </p>
+
+                                <div class="mt-auto">
+                                    <small class="text-muted">
+                                        {{ \Carbon\Carbon::parse($review['created_at'])->format('d M Y') }}
+                                    </small>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="text-center text-muted py-5">
+                        <i class="bi bi-star fs-1"></i>
+                        <p class="mt-2">No reviews found.</p>
+                    </div>
+                @endforelse
             </div>
+
         </div>
     </div>
 </div>

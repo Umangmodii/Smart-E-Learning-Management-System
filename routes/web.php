@@ -36,6 +36,9 @@ use App\Http\Controllers\Frontend\AddToCartController;
 use App\Livewire\Cart;
 use App\Livewire\Instructor\CourseFaqs;
 use App\Livewire\Instructor\CourseReviews;
+use App\Livewire\CourseEnroll;
+use App\Http\Controllers\Frontend\EnrollCourseController;
+use App\Livewire\CourseReviews as StudentCoursereviews;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -86,7 +89,6 @@ Route::middleware(['auth'])->get('/dashboard', function () {
         return redirect()->route('admin.dashboard');
     }
 
-    // Only actual students get to stay here
     return view('dashboard'); 
 })->name('dashboard');
 
@@ -101,6 +103,14 @@ Route::get('/dashboard',EditProfile::class)->name('dashboard');
 
 // Security setting
 Route::get('/account-settings',AccountSettings::class)->name('account-settings');
+
+// For Enrollment Page
+Route::get('/course-enroll', CourseEnroll::class)
+    ->name('course-enroll');
+Route::post('/course-enroll/{courseId}', [EnrollCourseController::class, 'enroll'])
+    ->name('course.enroll');
+
+Route::get('/course-reviews', StudentCoursereviews::class)->name('course-reviews');
 
 // OAuth2.0 GitHub Login
 Route::get('/auth/github', [GithubController::class,'redirect']);

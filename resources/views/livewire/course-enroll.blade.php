@@ -40,8 +40,8 @@
 
                 <!-- Enrolled Courses -->
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('enrolled-courses') ? 'active fw-bold' : 'text-dark' }} py-3" 
-                    href="{{ url('/enrolled-courses') }}" wire:navigate>
+                    <a class="nav-link {{ request()->is('course-enroll') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/course-enroll') }}" wire:navigate>
                         <i class="bi bi-journal-bookmark me-2"></i> Enrolled Courses
                     </a>
                 </li>
@@ -108,8 +108,8 @@
 
                 <!-- Enrolled Courses -->
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('enrolled-courses') ? 'active fw-bold' : 'text-dark' }} py-3" 
-                    href="{{ url('/enrolled-courses') }}" wire:navigate>
+                    <a class="nav-link {{ request()->is('course-enroll') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/course-enroll') }}" wire:navigate>
                         <i class="bi bi-journal-bookmark me-2"></i> Enrolled Courses
                     </a>
                 </li>
@@ -140,10 +140,57 @@
         </div>
     </div>
 
-        <div class="flex-grow-1 p-3 p-md-4">
+         <div class="flex-grow-1 p-3 p-md-4">
             <div class="text-center mb-4">
-                <h2 class="fw-bold">Course Enrollements</h2>
+                <h2 class="fw-bold">Course Enrollments</h2>
             </div>
+            <hr>
+
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <div class="row g-4">
+            @forelse($enrollments as $enroll)
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+
+                        <div class="position-relative">
+                            <img src="{{ asset('storage/'.$enroll->course->thumbnail) }}"
+                                                            class="card-img-top"
+                                                            style="aspect-ratio:16/9; object-fit:cover;">
+
+                            <span class="badge bg-success position-absolute top-0 start-0 m-2">
+                                {{ ucfirst($enroll->status) }}
+                            </span>
+                        </div>
+
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="fw-bold">
+                                {{ $enroll->course->title}}
+                            </h6>
+
+                            <p class="text-muted small mb-2">
+                                {{ Str::limit($enroll->course->short_description) }}
+                            </p>
+
+                            <div class="mt-auto">
+                                <a href="#" class="btn btn-primary w-100 rounded-pill btn-sm">
+                                    ▶ Start Learning
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @empty
+                <div class="text-center text-muted py-5">
+                    <i class="bi bi-journal-x fs-1"></i>
+                    <p class="mt-2">No enrolled courses found.</p>
+                </div>
+            @endforelse
+        </div>
 
         </div>
     </div>

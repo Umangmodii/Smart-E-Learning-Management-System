@@ -47,8 +47,8 @@
 
                 <!-- Enrolled Courses -->
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('enrolled-courses') ? 'active fw-bold' : 'text-dark' }} py-3" 
-                    href="{{ url('/enrolled-courses') }}" wire:navigate>
+                    <a class="nav-link {{ request()->is('course-enroll') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/course-enroll') }}" wire:navigate>
                         <i class="bi bi-journal-bookmark me-2"></i> Enrolled Courses
                     </a>
                 </li>
@@ -120,8 +120,8 @@
 
                 <!-- Enrolled Courses -->
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('enrolled-courses') ? 'active fw-bold' : 'text-dark' }} py-3" 
-                    href="{{ url('/enrolled-courses') }}" wire:navigate>
+                    <a class="nav-link {{ request()->is('course-enroll') ? 'active fw-bold' : 'text-dark' }} py-3" 
+                    href="{{ url('/course-enroll') }}" wire:navigate>
                         <i class="bi bi-journal-bookmark me-2"></i> Enrolled Courses
                     </a>
                 </li>

@@ -302,13 +302,15 @@
                                                         </button>
                                                     </form>
                                                 @else
-                                                   <a href=""
-                                                    class="btn btn-primary btn-sm rounded-pill px-3 fw-bold">
-                                                        Enroll Now
-                                                    </a>
-
+                                                  <form action="{{ route('course.enroll', $course->id) }}" method="POST" style="display:inline;">
+                                                        @csrf
+                                                        <button type="submit"
+                                                            class="btn btn-success btn-sm rounded-pill px-3 fw-bold"
+                                                            onclick="event.stopPropagation();">
+                                                            Enroll Now
+                                                        </button>
+                                                    </form>
                                                 @endif
-
                                             </div>
                                         </div>
                                     </div>
