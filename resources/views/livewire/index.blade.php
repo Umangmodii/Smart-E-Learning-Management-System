@@ -254,11 +254,11 @@
 
                                             {{-- Rating (Mockup) --}}
                                             <div class="d-flex align-items-center mb-2">
-                                                <span class="fw-bold me-1 text-warning small">4.8</span>
+                                                <span class="fw-bold me-1 text-warning small"> {{ number_format($course->reviews->avg('rating'), 1) }} </span>
                                                 <div class="text-warning extra-small d-flex gap-1">
                                                     <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
                                                 </div>
-                                                <span class="text-muted ms-1 extra-small">(2.4k)</span>
+                                                <span class="text-muted ms-1 extra-small">({{ $course->reviews->count() }} reviews)</span>
                                             </div>
 
                                             {{-- Metadata: Duration & Language --}}
