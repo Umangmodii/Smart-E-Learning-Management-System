@@ -32,6 +32,7 @@
     <link rel="manifest" href="{{ asset('manifest.json') }}">
 
     @livewireStyles
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>

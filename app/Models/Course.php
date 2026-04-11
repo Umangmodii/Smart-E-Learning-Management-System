@@ -87,6 +87,6 @@ class Course extends Model
     // Course has many reviews
     public function reviews()
     {
-        return $this->hasMany(CourseReview::class);
+        return $this->hasMany(CourseReview::class, 'course_id');
     }
 }

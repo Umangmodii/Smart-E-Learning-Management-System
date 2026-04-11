@@ -76,7 +76,7 @@
             <div class="ps-lg-4">
                 <h5 class="text-muted fw-bold small mb-1">Total:</h5>
                 <h1 class="fw-bold mb-3">₹{{ number_format($totalPrice, 0) }}</h1>
-                <button class="btn btn-primary btn-lg w-100 fw-bold py-3 mb-2 rounded-0 border-0">Proceed to Checkout</button>
+                <button onclick="window.location='{{ route('payment.checkout') }}'" class="btn btn-primary btn-lg w-100 fw-bold py-3 mb-2 rounded-0 border-0">Proceed to Checkout  <i class="bi bi-arrow-right"></i> </button>
                 <p class="text-muted extra-small text-center mb-4">You won't be charged yet</p>
                 <hr>
                 <div class="mt-4">
@@ -91,38 +91,105 @@
         @endif
     </div>
 
-    {{-- YOU MIGHT ALSO LIKE SECTION --}}
     <div class="mt-5 pt-5">
-        <h3 class="fw-bold mb-4">You might also like</h3>
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4">
-            @foreach($recommendedCourses as $course)
-                <div class="col">
-                    <a href="{{ route('course-details', ['course_slug' => $course->slug]) }}" class="text-decoration-none text-dark">
-                        <div class="card h-100 border-0 shadow-sm course-hover">
-                            <img src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : 'https://placehold.co/400x225' }}" 
-                                 class="card-img-top rounded-0" alt="{{ $course->title }}">
-                            <div class="card-body p-2">
-                                <h6 class="fw-bold mb-1 line-clamp-2" style="font-size: 0.9rem; min-height: 2.4rem;">{{ $course->title }}</h6>
-                                <p class="text-muted extra-small mb-1">{{ $course->instructor->name ?? 'Expert' }}</p>
-                                <div class="d-flex align-items-center gap-1 mb-1">
-                                    <span class="text-warning fw-bold extra-small"> {{ $item['avg_rating'] }}  </span>
-                                    <div class="text-warning extra-small" style="font-size: 0.6rem;">
-                                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
-                                    </div>
-                                    <span class="text-muted extra-small">({{ $item['review_count'] }})</span>
-                                </div>
-                                <h6 class="fw-bold mb-2">₹{{ number_format($course->discount_price > 0 ? $course->discount_price : $course->price, 0) }}</h6>
-                                <div class="d-flex gap-1">
-                                    <span class="badge bg-primary extra-small px-2 py-1 rounded-0">Premium</span>
-                                    <span class="badge bg-light text-dark border extra-small px-2 py-1 rounded-0">Bestseller</span>
-                                </div>
+    <h3 class="fw-bold mb-4">You might also like</h3>
+
+    <!-- Mobile Slider -->
+    <div class="d-flex d-md-none overflow-auto gap-3 pb-2" style="scroll-snap-type: x mandatory;">
+        @foreach($recommendedCourses as $course)
+            <div style="min-width: 48%; scroll-snap-align: start;">
+                <a href="{{ route('course-details', ['course_slug' => $course->slug]) }}" class="text-decoration-none text-dark">
+                    <div class="card h-100 border-0 shadow-sm course-hover">
+                        <img src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : 'https://placehold.co/400x225' }}" 
+                             class="card-img-top rounded-0">
+
+                        <div class="card-body p-2">
+                            <h6 class="fw-bold mb-1 line-clamp-2" style="font-size: 0.9rem;">
+                                {{ $course->title }}
+                            </h6>
+
+                            <p class="text-muted extra-small mb-1">
+                                {{ $course->instructor->name ?? 'Expert' }}
+                            </p>
+
+                            <div class="d-flex align-items-center gap-1 mb-1">
+                                <span class="text-warning fw-bold extra-small">
+                                    {{ $course->avg_rating ?? 4.5 }}
+                                </span>
+                                <i class="bi bi-star-fill text-warning extra-small"></i>
+                                <span class="text-muted extra-small">
+                                    ({{ $course->review_count ?? 0 }})
+                                </span>
                             </div>
+
+                            <h6 class="fw-bold mb-2">
+                                ₹{{ number_format($course->discount_price > 0 ? $course->discount_price : $course->price, 0) }}
+                            </h6>
+                            <form action="{{ route('add.to.cart', $course->id) }}" method="POST" class="mt-2">
+                            @csrf
+                            <button type="submit" 
+                                    class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-none w-100 w-md-auto"
+                                    onclick="event.stopPropagation();">
+                                Add to Cart
+                            </button>
+                        </form>
                         </div>
-                    </a>
-                </div>
-            @endforeach
-        </div>
+                    </div>
+                </a>
+            </div>
+        @endforeach
     </div>
+
+    <!-- Desktop Grid -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-4 d-none d-md-flex">
+        @foreach($recommendedCourses as $course)
+            <div class="col">
+                <a href="{{ route('course-details', ['course_slug' => $course->slug]) }}" class="text-decoration-none text-dark">
+                    <div class="card h-100 border-0 shadow-sm course-hover">
+                        <img src="{{ $course->thumbnail ? asset('storage/' . $course->thumbnail) : 'https://placehold.co/400x225' }}" 
+                             class="card-img-top rounded-0">
+
+                        <div class="card-body p-2">
+                            <h6 class="fw-bold mb-1 line-clamp-2" style="font-size: 0.9rem;">
+                                {{ $course->title }}
+                            </h6>
+                            <p class="text-muted small mb-2" 
+                            style="font-size: 0.85rem; line-height: 1;">
+                                {{ $course->short_description }}
+                            </p>
+
+                            <p class="text-muted extra-small mb-1">
+                                {{ $course->instructor->name ?? 'Expert' }}
+                            </p>
+
+                            <div class="d-flex align-items-center gap-1 mb-1">
+                                <span class="text-warning fw-bold extra-small">
+                                    {{ $course->avg_rating ?? 4.5 }}
+                                </span>
+                                <i class="bi bi-star-fill text-warning extra-small"></i>
+                                <span class="text-muted extra-small">
+                                    ({{ $course->review_count ?? 0 }})
+                                </span>
+                            </div>
+
+                            <h6 class="fw-bold mb-2">
+                                ₹{{ number_format($course->discount_price > 0 ? $course->discount_price : $course->price, 0) }}
+                            </h6>
+                            <form action="{{ route('add.to.cart', $course->id) }}" method="POST" class="mt-2">
+                            @csrf
+                            <button type="submit" 
+                                    class="btn btn-primary btn-sm rounded-pill px-3 fw-bold shadow-none w-100 w-md-auto"
+                                    onclick="event.stopPropagation();">
+                                Add to Cart
+                            </button>
+                        </form>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        @endforeach
+    </div>
+   </div>
 </div>
 
 <style>

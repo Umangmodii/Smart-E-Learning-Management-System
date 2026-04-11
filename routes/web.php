@@ -39,6 +39,9 @@ use App\Livewire\Instructor\CourseReviews;
 use App\Livewire\CourseEnroll;
 use App\Http\Controllers\Frontend\EnrollCourseController;
 use App\Livewire\CourseReviews as StudentCoursereviews;
+use App\Livewire\Payment\Checkout;
+use App\Http\Controllers\Payments\RazorpayController;
+use App\Livewire\Orderhistory;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -112,6 +115,15 @@ Route::post('/course-enroll/{courseId}', [EnrollCourseController::class, 'enroll
 
 Route::get('/course-reviews', StudentCoursereviews::class)->name('course-reviews');
 
+// For Order History 
+Route::get('/order-history', Orderhistory::class)->name('order-history');
+
+// For Checkout Page
+Route::get('/payment/checkout', Checkout::class)->name('payment.checkout'); 
+
+// Razorpay Payment Verification Route
+Route::post('/payment/verify', [RazorpayController::class, 'verifyPayment']);
+
 // OAuth2.0 GitHub Login
 Route::get('/auth/github', [GithubController::class,'redirect']);
 Route::get('/github/callback', [GithubController::class, 'callback']);
@@ -150,7 +162,6 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
 // ----------------------------  Instructor  ---------------------------------------------
 
 Route::prefix('instructor')->group(function () {
-    // Landing Page
     Route::get('/started-teach', StartedTeach::class)->name('instructor.started_teach');
 
     // Guest routes: Only accessible if NOT logged in as instructor

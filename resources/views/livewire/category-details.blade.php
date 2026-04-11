@@ -116,7 +116,7 @@
                 </h2>
                 <div id="collapseLevelMobile" class="accordion-collapse collapse show">
                     <div class="accordion-body py-2">
-                        @foreach(['beginner', 'intermediate', 'advanced'] as $lvl)
+                        @foreach($levelCounts->keys() as $lvl)
                             <div class="form-check d-flex justify-content-between align-items-center mb-1 ps-0">
                                 <div class="d-flex align-items-center">
                                     <input type="checkbox" wire:model.live="selectedLevels" value="{{ $lvl }}" class="form-check-input ms-0 me-2" id="L-{{ $lvl }}-mobile">
@@ -129,50 +129,50 @@
                 </div>
             </div>
 
-            {{-- 4. DURATION --}}
-            <div class="accordion-item border-0 border-bottom">
-                <h2 class="accordion-header">
-                    <button class="accordion-button fw-bold py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDurMobile">
-                        Duration
-                    </button>
-                </h2>
-                <div id="collapseDurMobile" class="accordion-collapse collapse show">
-                    <div class="accordion-body py-2">
-                        @foreach(['short' => '0-3 Hours', 'medium' => '3-10 Hours', 'long' => '10+ Hours'] as $key => $label)
-                            <div class="form-check d-flex justify-content-between align-items-center mb-1 ps-0">
-                                <div class="d-flex align-items-center">
-                                    <input type="checkbox" wire:model.live="selectedDuration" value="{{ $key }}" class="form-check-input ms-0 me-2" id="D-{{ $key }}-mobile">
-                                    <label class="form-check-label small cursor-pointer" for="D-{{ $key }}-mobile">{{ $label }}</label>
+             {{-- 4. DURATION --}}
+                        <div class="accordion-item border-0 border-bottom">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-bold py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDur">
+                                    Duration
+                                </button>
+                            </h2>
+                            <div id="collapseDur" class="accordion-collapse collapse show">
+                                <div class="accordion-body py-2">
+                                    @foreach(['short' => '0-3 Hours', 'medium' => '3-10 Hours', 'long' => '10+ Hours'] as $key => $label)
+                                        <div class="form-check d-flex justify-content-between align-items-center mb-1 ps-0">
+                                            <div class="d-flex align-items-center">
+                                                <input type="checkbox" wire:model.live="selectedDuration" value="{{ $key }}" class="form-check-input ms-0 me-2" id="D-{{ $key }}">
+                                                <label class="form-check-label small cursor-pointer" for="D-{{ $key }}">{{ $label }}</label>
+                                            </div>
+                                            <span class="text-muted tiny">({{ $durationCounts[$key] ?? 0 }})</span>
+                                        </div>
+                                    @endforeach
                                 </div>
-                                <span class="text-muted tiny">({{ $durationCounts[$key] ?? 0 }})</span>
                             </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-
-            {{-- 5. PRICE --}}
-            <div class="accordion-item border-0">
-                <h2 class="accordion-header">
-                    <button class="accordion-button fw-bold py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePriceMobile">
-                        Price
-                    </button>
-                </h2>
-                <div id="collapsePriceMobile" class="accordion-collapse collapse show">
-                    <div class="accordion-body py-2">
-                        <div class="form-check mb-1 ps-0">
-                            <input type="radio" wire:model.live="selectedPrice" value="paid" class="form-check-input ms-0 me-2" id="p-paid-mobile">
-                            <label class="form-check-label small cursor-pointer" for="p-paid-mobile">Paid</label>
                         </div>
-                        <div class="form-check ps-0">
-                            <input type="radio" wire:model.live="selectedPrice" value="free" class="form-check-input ms-0 me-2" id="p-free-mobile">
-                            <label class="form-check-label small cursor-pointer" for="p-free-mobile">Free</label>
+
+                        {{-- 5. PRICE --}}
+                        <div class="accordion-item border-0">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button fw-bold py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrice">
+                                    Price
+                                </button>
+                            </h2>
+                            <div id="collapsePrice" class="accordion-collapse collapse show">
+                                <div class="accordion-body py-2">
+                                    <div class="form-check mb-1 ps-0">
+                                        <input type="radio" wire:model.live="selectedPrice" value="paid" class="form-check-input ms-0 me-2" id="p-paid">
+                                        <label class="form-check-label small cursor-pointer" for="p-paid">Paid</label>
+                                    </div>
+                                    <div class="form-check ps-0">
+                                        <input type="radio" wire:model.live="selectedPrice" value="free" class="form-check-input ms-0 me-2" id="p-free">
+                                        <label class="form-check-label small cursor-pointer" for="p-free">Free</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
-
-        </div>
 
         {{-- Clear Button --}}
         <button wire:click="clearFilters" class="btn btn-danger btn-sm w-100 rounded-pill mt-3 shadow-sm py-2">
@@ -313,6 +313,46 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                {{--  6. Rating  --}}
+                <div class="accordion-item border-0">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button fw-bold py-3" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#collapseRating">
+                            Ratings
+                        </button>
+                    </h2>
+
+                   <div id="collapseRating" class="accordion-collapse collapse show">
+                        <div class="accordion-body py-2">
+                            @foreach([5, 4, 3, 2, 1] as $star)
+                                
+                                @if(isset($ratings[$star]) && $ratings[$star] > 0)
+                                    <div class="form-check d-flex justify-content-between align-items-center mb-1 ps-0">
+                                        <div class="d-flex align-items-center">
+                                            <input type="checkbox"
+                                                wire:model.live="selectedRating"
+                                                value="{{ $star }}"
+                                                class="form-check-input ms-0 me-2"
+                                                id="R-{{ $star }}">
+
+                                            <label class="form-check-label small cursor-pointer" for="R-{{ $star }}">
+                                                @for($i = 1; $i <= $star; $i++)
+                                                    ⭐
+                                                @endfor
+                                                <span class="ms-1">& Up</span>
+                                            </label>
+                                        </div>
+
+                                        <span class="text-muted small">
+                                            ({{ $ratings[$star] }})
+                                        </span>
+                                    </div>
+                                @endif
+
+                            @endforeach
                         </div>
                     </div>
 
