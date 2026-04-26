@@ -89,4 +89,10 @@ class Course extends Model
     {
         return $this->hasMany(CourseReview::class, 'course_id');
     }
+
+    // Course has many orders
+    public function instructors()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

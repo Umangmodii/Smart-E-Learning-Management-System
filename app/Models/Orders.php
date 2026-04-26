@@ -24,9 +24,12 @@ class Orders extends Model
     {
         return $this->belongsTo(Course::class);
     }
-
     public function payment()
     {
         return $this->hasOne(Payments::class,'order_id');
+    }
+    public function instructor()
+    {
+        return $this->belongsTo(User::class, 'instructor_id');
     }
 }

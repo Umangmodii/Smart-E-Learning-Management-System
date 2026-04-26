@@ -90,7 +90,7 @@
         <div class="card bg-dark text-white mb-3 border-0 shadow-sm h-100">
             <div class="card-body p-2 text-center">
                 <i class="bi bi-play-circle-fill opacity-50 mb-1" style="font-size: 1.5rem;"></i>
-                <h4 class="fw-bold mb-0">150</h4>
+                <h4 class="fw-bold mb-0">{{ $totalCourse  }}</h4>
                 <p class="mb-0 x-small">Live Courses</p>
             </div>
             <div class="card-footer text-white text-center x-small p-1" style="background: rgba(0,0,0,0.1);">

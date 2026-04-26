@@ -218,7 +218,6 @@ document.addEventListener('livewire:init', () => {
             "name": "Smart E-Learning",
             "description": data.name,
             "order_id": data.order_id,
-            // --- ADDED PREFILL ---
             "prefill": {
                 "name": "{{ auth()->user()->name }}",
                 "email": "{{ auth()->user()->email }}",

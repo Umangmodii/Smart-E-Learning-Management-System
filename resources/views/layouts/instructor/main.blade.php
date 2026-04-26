@@ -3,43 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Smart E-Learning | {{ $title ?? 'E-Learning' }} </title>
-        <!-- Favicons -->
-        <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" type="image/svg+xml">
-        <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" sizes="32x32">
-        <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+    <title>Smart E-Learning | {{ $title ?? 'E-Learning' }}</title>
+
+    <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+
     <link href="{{ asset('instructor/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="manifest" href="{{ asset('manifest.json') }}">
 
     @livewireStyles
-
 </head>
+
 <body>
-    {{-- Header Layout --}}
+
     @include('layouts.header')
 
-    {{-- Content Layout --}}
     <div class="container py-4">
-        <div class="main-container">
-            @if (isset($breadcrumbSlot))
-                <div class="container mt-3">
-                    {{ $breadcrumbSlot }}
-                </div>
-            @endif
-        </div>
         
+        @if (isset($breadcrumbSlot))
+            <div class="mb-3">
+                {{ $breadcrumbSlot }}
+            </div>
+        @endif
+
         {{ $slot ?? '' }}
     </div>
 
-    @yield('content')
-
-    {{-- Footer Layout --}}
     @include('layouts.footer')
 
+
+    <!-- jQuery FIRST -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- DataTables JS (MATCH VERSION) -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- SweetAlert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @livewireScripts
+
 </body>
 </html>

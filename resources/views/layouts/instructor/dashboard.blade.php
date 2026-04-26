@@ -10,6 +10,7 @@
     <link href="{{ asset('admin/css/style.css') }}?v={{ time() }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.min.css">
     <link rel="icon" href="{{ asset('images/smartlms_logo.png') }}" type="image/svg+xml">
+    <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     
     @livewireStyles
     <style>
@@ -51,9 +52,9 @@
         </li>
 
         <li>
-            <a href="{{ url('admin/students') }}" 
-               class="d-flex align-items-center {{ request()->is('admin/students*') ? 'active' : '' }}">
-                <i class="bi bi-people-fill me-2"></i> <span>Enrolled Students</span>
+            <a href="{{ url('instructor/enrollments') }}" 
+               class="d-flex align-items-center {{ request()->is('instructor/enrollments*') ? 'active' : '' }}">
+                <i class="bi bi-people-fill me-2"></i> <span>Enrollments Students</span>
             </a>
         </li>
 
@@ -91,18 +92,18 @@
             </li>
 
             <li>
-                <a href="{{ url('admin/revenue') }}" 
-                class="d-flex align-items-center {{ request()->is('admin/revenue*') ? 'active' : '' }}">
-                    <i class="bi bi-wallet2 me-2"></i> <span>Platform Revenue</span>
+                <a href="{{ url('instructor/revenue') }}" 
+                class="d-flex align-items-center {{ request()->is('instructor/revenue*') ? 'active' : '' }}">
+                    <i class="bi bi-wallet2 me-2"></i> <span>Orders Revenue</span>
                 </a>
             </li>
 
-            <li>
-                <a href="{{ url('admin/settings') }}" 
-                class="d-flex align-items-center {{ request()->is('admin/settings*') ? 'active' : '' }}">
+            {{-- <li>
+                <a href="{{ url('instructor/settings') }}" 
+                class="d-flex align-items-center {{ request()->is('instructor/settings*') ? 'active' : '' }}">
                     <i class="bi bi-sliders me-2"></i> <span>Global Settings</span>
                 </a>
-            </li>
+            </li> --}}
 
             <li id="noMenuResult" class="text-center py-4" style="display: none;">
                 <i class="bi bi-search text-muted d-block fs-4 mb-2"></i>
@@ -162,6 +163,7 @@
     <script src="https://cdn.datatables.net/2.0.0/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.0/js/dataTables.bootstrap5.min.js"></script>
     <script src="{{ asset('admin/js/script.js') }}?v={{ time() }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     @livewireScripts
 </body>

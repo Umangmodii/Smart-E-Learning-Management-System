@@ -42,6 +42,8 @@ use App\Livewire\CourseReviews as StudentCoursereviews;
 use App\Livewire\Payment\Checkout;
 use App\Http\Controllers\Payments\RazorpayController;
 use App\Livewire\Orderhistory;
+use App\Livewire\Instructor\Revenue;
+use App\Livewire\Instructor\CourseEnrollments;
 
 // ----------------------------  Student Login ---------------------------------------------
 
@@ -188,6 +190,12 @@ Route::middleware(['auth:instructor'])->prefix('instructor')->name('instructor.'
 
         // For Course Reviews
         Route::get('/courses/reviews', CourseReviews::class)->name('course-reviews');
+
+        // For Revenue
+        Route::get('/revenue', Revenue::class)->name('revenue');
+
+        // For Enrollments Course 
+        Route::get('/enrollments', CourseEnrollments::class);
     });
 
     Route::get('/pending-approval', function () {
